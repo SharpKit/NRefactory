@@ -25,7 +25,7 @@ namespace ICSharpCode.NRefactory.Semantics
 	/// <summary>
 	/// Represents a local variable or parameter.
 	/// </summary>
-	public class LocalResolveResult : ResolveResult
+    public partial class LocalResolveResult : ResolveResult
 	{
 		readonly IVariable variable;
 		

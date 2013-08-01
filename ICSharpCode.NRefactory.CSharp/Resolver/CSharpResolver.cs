@@ -38,7 +38,7 @@ namespace ICSharpCode.NRefactory.CSharp.Resolver
 	/// <remarks>
 	/// This class is thread-safe.
 	/// </remarks>
-	public class CSharpResolver
+	public partial class CSharpResolver
 	{
 		static readonly ResolveResult ErrorResult = ErrorResolveResult.UnknownError;
 		

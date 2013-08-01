@@ -99,6 +99,7 @@
     <Compile Include="Editor\TextChangeEventArgs.cs" />
     <Compile Include="Editor\TextSourceVersionProvider.cs" />
     <Compile Include="IAnnotatable.cs" />
+    <Compile Include="NRefactory.cs" />
     <Compile Include="PatternMatching\BacktrackingInfo.cs" />
     <Compile Include="PatternMatching\Choice.cs" />
     <Compile Include="PatternMatching\AnyNode.cs" />
@@ -287,12 +288,7 @@
     <Compile Include="Editor\UnicodeNewline.cs" />
     <Compile Include="Completion\FrameworkLookup.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Completion\" />
-    <Folder Include="TypeSystem\" />
-    <Folder Include="Utils\CompositeFormatStringParser\" />
-    <Folder Include="Refactoring\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="..\doc\Pattern Matching.html">
       <Link>PatternMatching\Pattern Matching.html</Link>

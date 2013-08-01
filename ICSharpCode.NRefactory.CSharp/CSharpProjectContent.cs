@@ -28,7 +28,7 @@ using ICSharpCode.NRefactory.Utils;
 namespace ICSharpCode.NRefactory.CSharp
 {
 	[Serializable]
-	public class CSharpProjectContent : IProjectContent
+	public partial class CSharpProjectContent : IProjectContent
 	{
 		string assemblyName;
 		string fullAssemblyName;

@@ -24,7 +24,7 @@ namespace ICSharpCode.NRefactory.Semantics
 	/// <summary>
 	/// Represents the 'typeof'.
 	/// </summary>
-	public class TypeOfResolveResult : ResolveResult
+    public partial class TypeOfResolveResult : ResolveResult
 	{
 		readonly IType referencedType;
 		

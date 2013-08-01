@@ -28,7 +28,7 @@ namespace ICSharpCode.NRefactory.CSharp.Resolver
 	/// <summary>
 	/// Represents the result of an access to a member of a dynamic object.
 	/// </summary>
-	public class DynamicMemberResolveResult : ResolveResult
+	public partial class DynamicMemberResolveResult : ResolveResult
 	{
 		/// <summary>
 		/// Target of the member access (a dynamic object).

@@ -28,7 +28,7 @@ namespace ICSharpCode.NRefactory.CSharp.Resolver
 	/// Represents the result of a method, constructor or indexer invocation.
 	/// Provides additional C#-specific information for InvocationResolveResult.
 	/// </summary>
-	public class CSharpInvocationResolveResult : InvocationResolveResult
+	public partial class CSharpInvocationResolveResult : InvocationResolveResult
 	{
 		public readonly OverloadResolutionErrors OverloadResolutionErrors;
 		

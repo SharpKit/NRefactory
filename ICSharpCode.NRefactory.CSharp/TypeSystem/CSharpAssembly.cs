@@ -27,7 +27,7 @@ using ICSharpCode.NRefactory.Utils;
 
 namespace ICSharpCode.NRefactory.CSharp.TypeSystem
 {
-	public class CSharpAssembly : IAssembly
+    public partial class CSharpAssembly : IAssembly
 	{
 		readonly ICompilation compilation;
 		readonly ITypeResolveContext context;

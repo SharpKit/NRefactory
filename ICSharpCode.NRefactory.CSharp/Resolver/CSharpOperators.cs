@@ -26,7 +26,7 @@ using ICSharpCode.NRefactory.Utils;
 
 namespace ICSharpCode.NRefactory.CSharp.Resolver
 {
-	sealed class CSharpOperators
+	sealed partial class CSharpOperators
 	{
 		readonly ICompilation compilation;
 		
@@ -90,7 +90,7 @@ namespace ICSharpCode.NRefactory.CSharp.Resolver
 			throw new ArgumentException();
 		}
 		
-		internal class OperatorMethod : IParameterizedMember
+		internal partial class OperatorMethod : IParameterizedMember
 		{
 			readonly ICompilation compilation;
 			readonly IList<IParameter> parameters = new List<IParameter>();

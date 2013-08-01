@@ -27,7 +27,7 @@ namespace ICSharpCode.NRefactory.TypeSystem.Implementation
 	/// Base class for <see cref="IUnresolvedEntity"/> implementations.
 	/// </summary>
 	[Serializable]
-	public abstract class AbstractUnresolvedEntity : IUnresolvedEntity, IFreezable
+    public abstract partial class AbstractUnresolvedEntity : IUnresolvedEntity, IFreezable
 	{
 		// possible optimizations to reduce the memory usage of AbstractUnresolvedEntity:
 		// - store regions in more compact form (e.g. assume both file names are identical; use ushort for columns)

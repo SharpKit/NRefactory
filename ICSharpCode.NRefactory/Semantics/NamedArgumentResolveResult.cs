@@ -25,7 +25,7 @@ namespace ICSharpCode.NRefactory.Semantics
 	/// <summary>
 	/// Represents a named argument.
 	/// </summary>
-	public class NamedArgumentResolveResult : ResolveResult
+    public partial class NamedArgumentResolveResult : ResolveResult
 	{
 		/// <summary>
 		/// Gets the member to which the parameter belongs.

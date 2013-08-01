@@ -78,7 +78,8 @@ namespace ICSharpCode.NRefactory.CSharp.Completion
 		/// </summary>
 		/// <param name="type">The type to import</param>
 		/// <param name="useFullName">If set to true the full name of the type needs to be used.</param>
-		ICompletionData CreateImportCompletionData(IType type, bool useFullName, bool addForTypeCreation);
+        /// <param name="addForTypeCreation"></param>
+        ICompletionData CreateImportCompletionData(IType type, bool useFullName, bool addForTypeCreation);
 
 		ICompletionData CreateFormatItemCompletionData(string format, string description, object example);
 

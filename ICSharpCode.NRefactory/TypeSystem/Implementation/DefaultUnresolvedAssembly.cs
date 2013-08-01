@@ -33,7 +33,7 @@ namespace ICSharpCode.NRefactory.TypeSystem.Implementation
 	/// Default implementation for <see cref="IUnresolvedAssembly"/>.
 	/// </summary>
 	[Serializable]
-	public class DefaultUnresolvedAssembly : AbstractFreezable, IUnresolvedAssembly
+    public partial class DefaultUnresolvedAssembly : AbstractFreezable, IUnresolvedAssembly
 	{
 		string assemblyName;
 		string fullAssemblyName;
@@ -285,8 +285,8 @@ namespace ICSharpCode.NRefactory.TypeSystem.Implementation
 			return ns;
 		}
 		#endregion
-		
-		sealed class DefaultResolvedAssembly : IAssembly
+
+        sealed partial class DefaultResolvedAssembly : IAssembly
 		{
 			readonly DefaultUnresolvedAssembly unresolvedAssembly;
 			readonly ICompilation compilation;
