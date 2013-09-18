@@ -2,7 +2,8 @@
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+  <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+      <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{961DADFA-7CE6-429F-BC22-47630D6DB826}</ProjectGuid>

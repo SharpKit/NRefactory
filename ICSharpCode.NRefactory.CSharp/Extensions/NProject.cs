@@ -53,7 +53,8 @@ namespace ICSharpCode.NRefactory.Extensions
             //danel: parser.ErrorPrinter
 
             ParseCsFiles();
-            var ms = StopwatchHelper.TimeInMs(() => AssemblyReferences.ForEachParallel(LoadAssembly, Parallel));
+            LoadAssemblies();
+            var ms = StopwatchHelper.TimeInMs(LoadAssemblies);
             FormatLine("{0} References End: {1}ms", AssemblyReferences.Count, ms);
             ProjectContent = new CSharpProjectContent();
             ProjectContent = (CSharpProjectContent)ProjectContent.SetAssemblyName(AssemblyName);
@@ -67,6 +68,11 @@ namespace ICSharpCode.NRefactory.Extensions
 
         }
 
+        private void LoadAssemblies()
+        {
+            AssemblyReferences.ForEachParallel(LoadAssembly, Parallel);
+        }
+
         protected virtual void ParseCsFiles()
         {
             var ms = StopwatchHelper.TimeInMs(() => NFiles.ForEachParallel(ParseSkFile, Parallel));
@@ -78,8 +84,11 @@ namespace ICSharpCode.NRefactory.Extensions
 
         SyntaxTree ParseFile(string file)
         {
-            var unit = CSharpParser.Parse(File.OpenRead(file), file);
-            return unit;
+            using (var fs = File.OpenRead(file))
+            {
+                var unit = CSharpParser.Parse(fs, file);
+                return unit;
+            }
         }
 
 
@@ -163,7 +172,7 @@ namespace ICSharpCode.NRefactory.Extensions
             catch (Exception e)
             {
                 //file.Project.Compiler.Log.Debug(e.ToString());
-                throw new CompilerException(file.Filename, 1, 1, "Error while applying navigator on file: " + file.Filename +" "+e);
+                throw new CompilerException(file.Filename, 1, 1, "Error while applying navigator on file: " + file.Filename + " " + e);
             }
         }
 
@@ -203,7 +212,7 @@ namespace ICSharpCode.NRefactory.Extensions
             if (filename.Contains("System.EnterpriseServices.dll"))
                 return null;//HACK: exception is thrown by cecil in this assembly
 
-            var loader = AssemblyLoader.Create(); //new CecilLoader();
+            var loader = new CecilLoader();
             try
             {
                 var x = loader.LoadAssemblyFile(filename);

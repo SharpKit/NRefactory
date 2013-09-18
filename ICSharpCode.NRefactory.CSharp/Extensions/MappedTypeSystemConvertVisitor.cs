@@ -25,14 +25,24 @@ namespace ICSharpCode.NRefactory.Extensions
         {
             return SetDecl(base.VisitAttribute(attribute), attribute);
         }
-        public override IUnresolvedEntity VisitPropertyDeclaration(PropertyDeclaration propertyDeclaration)
+        public override IUnresolvedEntity VisitPropertyDeclaration(PropertyDeclaration node)
         {
-            return SetDecl(base.VisitPropertyDeclaration(propertyDeclaration), propertyDeclaration);
+            var pe = (IUnresolvedProperty)base.VisitPropertyDeclaration(node);
+            if (pe.Getter != null)
+                pe.Getter.Declaration = node.Getter;
+            if (pe.Setter != null)
+                pe.Setter.Declaration = node.Setter;
+
+            return SetDecl(pe, node);
         }
 
         public override IUnresolvedEntity VisitMethodDeclaration(MethodDeclaration methodDeclaration)
         {
             return SetDecl(base.VisitMethodDeclaration(methodDeclaration), methodDeclaration);
+        }
+        public override IUnresolvedEntity VisitOperatorDeclaration(OperatorDeclaration operatorDeclaration)
+        {
+            return SetDecl(base.VisitOperatorDeclaration(operatorDeclaration), operatorDeclaration);
         }
 
         public override IUnresolvedEntity VisitConstructorDeclaration(ConstructorDeclaration constructorDeclaration)
@@ -42,7 +52,13 @@ namespace ICSharpCode.NRefactory.Extensions
 
         public override IUnresolvedEntity VisitIndexerDeclaration(IndexerDeclaration indexerDeclaration)
         {
-            return SetDecl(base.VisitIndexerDeclaration(indexerDeclaration), indexerDeclaration);
+            var pe = (IUnresolvedProperty)base.VisitIndexerDeclaration(indexerDeclaration);
+            if(pe.Getter!=null)
+                pe.Getter.Declaration = indexerDeclaration.Getter;
+            if(pe.Setter!=null)
+                pe.Setter.Declaration = indexerDeclaration.Setter;
+            
+            return SetDecl(pe, indexerDeclaration);
         }
 
         public override IUnresolvedEntity VisitAccessor(Accessor accessor)
@@ -50,19 +66,26 @@ namespace ICSharpCode.NRefactory.Extensions
             return SetDecl(base.VisitAccessor(accessor), accessor);
         }
 
-        public override IUnresolvedEntity VisitCustomEventDeclaration(CustomEventDeclaration eventDeclaration)
-        {
-            return SetDecl(base.VisitCustomEventDeclaration(eventDeclaration), eventDeclaration);
-        }
 
         public override IUnresolvedEntity VisitEnumMemberDeclaration(EnumMemberDeclaration enumMemberDeclaration)
         {
             return SetDecl(base.VisitEnumMemberDeclaration(enumMemberDeclaration), enumMemberDeclaration);
         }
 
-        public override IUnresolvedEntity VisitEventDeclaration(EventDeclaration eventDeclaration)
+        public override IUnresolvedEntity VisitCustomEventDeclaration(CustomEventDeclaration node)
         {
-            return SetDecl(base.VisitEventDeclaration(eventDeclaration), eventDeclaration);
+            var ev = (IUnresolvedEvent)base.VisitCustomEventDeclaration(node);
+            if (ev.AddAccessor != null)
+                ev.AddAccessor.Declaration = ev.AddAccessor;
+            if (ev.RemoveAccessor != null)
+                ev.RemoveAccessor.Declaration = ev.RemoveAccessor;
+
+            return SetDecl(ev, node);
+        }
+        public override IUnresolvedEntity VisitEventDeclaration(EventDeclaration node)
+        {
+            var ev = (IUnresolvedEvent)base.VisitEventDeclaration(node);
+            return SetDecl(ev, node);
         }
 
         public override IUnresolvedEntity VisitTypeDeclaration(TypeDeclaration typeDeclaration)

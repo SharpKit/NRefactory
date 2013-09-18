@@ -68,9 +68,9 @@ namespace ICSharpCode.NRefactory.Extensions
         {
             return compiler.Compilation.FindType(KnownTypeCode.Boolean);
         }
-        public static ITypeDefinition ArrayType(NProject compiler)
+        public static ITypeDefinition ArrayType(ICompilation compiler)
         {
-            return (ITypeDefinition)compiler.Compilation.FindType(KnownTypeCode.Array);
+            return (ITypeDefinition)compiler.FindType(KnownTypeCode.Array);
         }
         public static ResolveResult Value(object value, NProject compiler)
         {
@@ -81,7 +81,6 @@ namespace ICSharpCode.NRefactory.Extensions
         /// <summary>
         /// Access a static member, or a this.member
         /// </summary>
-        /// <param name="me"></param>
         /// <returns></returns>
         public static MemberResolveResult AccessSelf(this IMember me, bool forceNonConst)
         {

@@ -118,21 +118,21 @@ namespace ICSharpCode.NRefactory.Extensions
             if (me.UnresolvedMember == null)
                 return null;
             var x = me.UnresolvedMember.Declaration as EntityDeclaration;
-            if (x == null && me.IsAccessor())
-            {
-                var decl = me.AccessorOwner.GetDeclaration();
-                if (decl is PropertyDeclaration)
-                {
-                    var pe = (PropertyDeclaration)decl;
-                    if (me.IsGetter())
-                        return pe.Getter;
-                    return pe.Setter;
-                }
-                else
-                {
-                    throw new NotImplementedException();
-                }
-            }
+            //if (x == null && me.IsAccessor())
+            //{
+            //    var decl = me.AccessorOwner.GetDeclaration();
+            //    if (decl is PropertyDeclaration)
+            //    {
+            //        var pe = (PropertyDeclaration)decl;
+            //        if (me.IsGetter())
+            //            return pe.Getter;
+            //        return pe.Setter;
+            //    }
+            //    else
+            //    {
+            //        throw new NotImplementedException();
+            //    }
+            //}
             return x;
         }
         public static EntityDeclaration GetDeclaration(this IMember me)

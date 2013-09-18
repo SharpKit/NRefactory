@@ -2,6 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
     <ProjectGuid>{3B2A5653-EC97-4001-BB9B-D90F1AF2C371}</ProjectGuid>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>Library</OutputType>
@@ -23,6 +24,7 @@
     <NoWarn>1591</NoWarn>
     <OutputPath>..\bin\$(Configuration)\</OutputPath>
     <DocumentationFile>..\bin\$(Configuration)\ICSharpCode.NRefactory.xml</DocumentationFile>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -46,10 +48,12 @@
     <DebugType>full</DebugType>
     <DebugSymbols>True</DebugSymbols>
     <OutputPath>..\bin\Debug\</OutputPath>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <OutputPath>..\bin\Release\</OutputPath>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'net_4_5_Debug' ">
     <Optimize>False</Optimize>
@@ -63,6 +67,7 @@
     <DebugSymbols>True</DebugSymbols>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <OutputPath>..\bin\net_4_5_Debug\</OutputPath>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'net_4_5_Release' ">
     <Optimize>True</Optimize>
@@ -74,6 +79,7 @@
     <DebugType>none</DebugType>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <OutputPath>..\bin\net_4_5_Release\</OutputPath>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

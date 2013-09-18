@@ -197,10 +197,11 @@ namespace ICSharpCode.NRefactory.Extensions
         }
         public static bool IsAutomatic(this IEvent ev, NProject project)
         {
-            var decl = NProjectExtensions.GetDeclaration(ev.AddAccessor);
-            if (decl != null)
-                return decl is EventDeclaration; //manual events return 'Accessor' type in declaration
-            throw new NotImplementedException();
+            var decl =  NProjectExtensions.GetDeclaration(ev.AddAccessor);
+            return decl == null;
+            //if (decl != null)
+            //    return decl is EventDeclaration; //manual events return 'Accessor' type in declaration
+            //throw new NotImplementedException();
         }
 
         public static IProperty GetProperty(this IType ce, string name)
@@ -291,7 +292,7 @@ namespace ICSharpCode.NRefactory.Extensions
             return ce1.FullName == ce2.FullName;
         }
 
-        public static bool IsAutomaticProperty(this IProperty pe, NProject project)
+        public static bool IsAutomaticProperty(this IProperty pe)
         {
             if (!pe.CanGet || !pe.CanSet || pe.IsIndexer)
                 return false;
