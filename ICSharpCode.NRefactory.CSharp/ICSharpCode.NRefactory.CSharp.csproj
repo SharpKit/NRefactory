@@ -218,6 +218,7 @@
     <Compile Include="Extensions\ICSharpResolveResultVisitor.cs" />
     <Compile Include="Extensions\InternalExtensions.cs" />
     <Compile Include="Extensions\MappedTypeSystemConvertVisitor.cs" />
+    <Compile Include="Extensions\NAssemblyCache.cs" />
     <Compile Include="Extensions\NProject.cs" />
     <Compile Include="Extensions\NProjectExtensions.cs" />
     <Compile Include="Extensions\ResolveResultInfo.cs" />

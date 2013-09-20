@@ -191,43 +191,10 @@ namespace ICSharpCode.NRefactory.Extensions
 
 
 
-        static NProject()
-        {
-            AssemblyCache = new Dictionary<string, AssemblyCacheItem>();
-        }
-        static Dictionary<string, AssemblyCacheItem> AssemblyCache;
-        private static IUnresolvedAssembly LoadAssemblyWithCache(string filename)
-        {
-            var lastWriteTime = File.GetLastWriteTime(filename);
-            var asm = AssemblyCache.TryGetValue(filename);
-            if (asm == null || asm.LastWriteTime != lastWriteTime)
-            {
-                asm = new AssemblyCacheItem { UnresolvedAssembly = LoadAssembly(filename), LastWriteTime = lastWriteTime };
-                AssemblyCache[filename] = asm;
-            }
-            return asm.UnresolvedAssembly;
-        }
-        private static IUnresolvedAssembly LoadAssembly(string filename)
-        {
-            if (filename.Contains("System.EnterpriseServices.dll"))
-                return null;//HACK: exception is thrown by cecil in this assembly
-
-            var loader = new CecilLoader();
-            try
-            {
-                var x = loader.LoadAssemblyFile(filename);
-                return x;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Error loading assembly: " + filename + ", " + e.Message);
-                return null;
-            }
-        }
+        public NAssemblyCache AssemblyCache { get; set; }
         void LoadAssembly(NAssembly asm)
         {
-            var filename = asm.Filename;
-            asm.UnresolvedAssembly = LoadAssemblyWithCache(filename);
+            AssemblyCache.LoadAssembly(asm);
         }
         void LoadAssemblies(List<NAssembly> files)
         {
@@ -284,11 +251,5 @@ namespace ICSharpCode.NRefactory.Extensions
     }
 
 
-    class AssemblyCacheItem
-    {
-        public string Filename { get; set; }
-        public IUnresolvedAssembly UnresolvedAssembly { get; set; }
-        public DateTime LastWriteTime { get; set; }
-    }
 
 }
