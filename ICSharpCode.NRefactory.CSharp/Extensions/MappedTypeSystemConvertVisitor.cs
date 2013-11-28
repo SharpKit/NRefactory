@@ -53,11 +53,11 @@ namespace ICSharpCode.NRefactory.Extensions
         public override IUnresolvedEntity VisitIndexerDeclaration(IndexerDeclaration indexerDeclaration)
         {
             var pe = (IUnresolvedProperty)base.VisitIndexerDeclaration(indexerDeclaration);
-            if(pe.Getter!=null)
+            if (pe.Getter != null)
                 pe.Getter.Declaration = indexerDeclaration.Getter;
-            if(pe.Setter!=null)
+            if (pe.Setter != null)
                 pe.Setter.Declaration = indexerDeclaration.Setter;
-            
+
             return SetDecl(pe, indexerDeclaration);
         }
 
