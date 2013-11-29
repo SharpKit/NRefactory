@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ICSharpCode.NRefactory.CSharp;
 using ICSharpCode.NRefactory.CSharp.TypeSystem;
 using ICSharpCode.NRefactory.TypeSystem;
+using ICSharpCode.NRefactory.TypeSystem.Implementation;
 
 namespace ICSharpCode.NRefactory.Extensions
 {
@@ -95,7 +96,38 @@ namespace ICSharpCode.NRefactory.Extensions
 
         public override IUnresolvedEntity VisitFieldDeclaration(FieldDeclaration fieldDeclaration)
         {
-            return SetDecl(base.VisitFieldDeclaration(fieldDeclaration), fieldDeclaration);
+            //if field declaration contains two fields, both IUnresolvedField are added to Members, but null will be returned.
+            //return SetDecl(base.VisitFieldDeclaration(fieldDeclaration), fieldDeclaration);
+
+            var f = (IUnresolvedField)base.VisitFieldDeclaration(fieldDeclaration);
+            if (f == null)
+            {
+                //the last added  fields do not have a Declaration set. So this way works.
+                //Another possible way: get the last N fields. N=fieldDeclaration.Variables.Count.
+
+                var fields = new List<IUnresolvedField>();
+                foreach (var mem in CurrentTypeDefinition.Members)
+                {
+                    if (mem.Declaration == null && mem is IUnresolvedField)
+                    {
+                        fields.Add((IUnresolvedField)mem);
+                        SetDecl(mem, fieldDeclaration);
+                    }
+                }
+                var vars = fieldDeclaration.Variables.ToArray();
+                if (vars.Length == fields.Count)
+                    for (var i = 0; i < fields.Count; i++)
+                    {
+                        var df = fields[i] as DefaultUnresolvedField;
+                        if (df != null)
+                        {
+                            df.Initializer = vars[i];
+                        }
+                    }
+                return null; //like VisitFieldDeclaration works, when Variables.Count>1.
+            }
+            ((DefaultUnresolvedField)f).Initializer = fieldDeclaration.Variables.FirstOrDefault();
+            return f;
         }
 
         private IUnresolvedEntity SetDecl(IUnresolvedEntity unresolvedEntity, object decl)
@@ -104,4 +136,22 @@ namespace ICSharpCode.NRefactory.Extensions
             return unresolvedEntity;
         }
     }
+
+}
+
+namespace ICSharpCode.NRefactory.CSharp.TypeSystem
+{
+
+    public partial class TypeSystemConvertVisitor
+    {
+        public IUnresolvedTypeDefinition CurrentTypeDefinition
+        {
+            get
+            {
+                return this.currentTypeDefinition;
+            }
+        }
+    }
+
+
 }
