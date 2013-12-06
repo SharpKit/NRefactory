@@ -173,10 +173,4 @@ namespace ICSharpCode.NRefactory.TypeSystem.Implementation
     {
         public object Declaration { get; set; }
     }
-
-    partial class DefaultUnresolvedField
-    {
-        public object Initializer { get; set; }
-    }
-
 }

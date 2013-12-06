@@ -197,7 +197,7 @@ namespace ICSharpCode.NRefactory.Extensions
         }
         public static bool IsAutomatic(this IEvent ev, NProject project)
         {
-            var decl =  NProjectExtensions.GetDeclaration(ev.AddAccessor);
+            var decl = NProjectExtensions.GetDeclaration(ev.AddAccessor);
             return decl == null;
             //if (decl != null)
             //    return decl is EventDeclaration; //manual events return 'Accessor' type in declaration
@@ -679,6 +679,28 @@ namespace ICSharpCode.NRefactory.Extensions
             MappedTypeSystemConvertVisitor typeSystemConvertVisitor = new MappedTypeSystemConvertVisitor(tree.FileName);
             typeSystemConvertVisitor.VisitSyntaxTree(tree);
             return typeSystemConvertVisitor.UnresolvedFile;
+        }
+
+        public static VariableInitializer GetVariable(this IField field)
+        {
+            var decl = (FieldDeclaration)field.GetDeclaration();
+            if (decl != null)
+            {
+                if (decl.Variables.Count <= 1) return decl.Variables.FirstOrDefault();
+
+                foreach (var init in decl.Variables)
+                {
+                    if (init.Name == field.Name) return init;
+                }
+            }
+            return null;
+        }
+
+        public static Expression GetInitializer(this IField field)
+        {
+            var variable = field.GetVariable();
+            if (variable == null) return null;
+            return variable.Initializer;
         }
 
     }

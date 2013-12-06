@@ -114,20 +114,9 @@ namespace ICSharpCode.NRefactory.Extensions
                         SetDecl(mem, fieldDeclaration);
                     }
                 }
-                var vars = fieldDeclaration.Variables.ToArray();
-                if (vars.Length == fields.Count)
-                    for (var i = 0; i < fields.Count; i++)
-                    {
-                        var df = fields[i] as DefaultUnresolvedField;
-                        if (df != null)
-                        {
-                            df.Initializer = vars[i];
-                        }
-                    }
                 return null; //like VisitFieldDeclaration works, when Variables.Count>1.
             }
-            ((DefaultUnresolvedField)f).Initializer = fieldDeclaration.Variables.FirstOrDefault();
-            return f;
+            return SetDecl(f, fieldDeclaration);
         }
 
         private IUnresolvedEntity SetDecl(IUnresolvedEntity unresolvedEntity, object decl)
