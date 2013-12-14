@@ -92,22 +92,54 @@ namespace ICSharpCode.NRefactory.Extensions
         }
 
 
+        void Store(CSharpAstResolver resolver, AstNode node, ResolveResult res)
+        {
+            var info = (ResolveResultInfo)res.Tag;
+            if (info == null)
+            {
+                info = new ResolveResultInfo();
+                res.Tag = info;
+            }
+            info.Resolver = resolver;
+            if (node != null)
+            {
+                node.AddAnnotation(res);
+                node.AddAnnotation(info);
+                info.Nodes.Add(node);
+            }
+            info.ResolveResult = res;
+
+            //HACK: Reported NRefactory issue: https://github.com/icsharpcode/NRefactory/issues/367
+            //When AnonymousTypeCreateExpression Navigator methods not called on initializer statements
+            if (node is AnonymousTypeCreateExpression)
+            {
+                var node2 = (AnonymousTypeCreateExpression)node;
+                var res2 = res as InvocationResolveResult;
+                if (res2 != null)
+                {
+                    foreach (var res3 in res2.InitializerStatements)
+                    {
+                        if (res3.Tag != null)
+                            continue;
+                        AstNode node3 = null;
+                        if (res3 is OperatorResolveResult)
+                        {
+                            var opRes = (OperatorResolveResult)res3;
+                            node3 = opRes.Operands[0].GetFirstNode();
+                        }
+                        Store(resolver, node3, res3);
+                    }
+                }
+            }
+
+        }
+
         DelegatedResolveVisitorNavigator CreateNavigator(CSharpAstResolver resolver)
         {
             var navigator = new DelegatedResolveVisitorNavigator();
             navigator.Resolved += (node, res) =>
             {
-                var info = (ResolveResultInfo)res.Tag;
-                if (info == null)
-                {
-                    info = new ResolveResultInfo();
-                    res.Tag = info;
-                }
-                info.Resolver = resolver;
-                node.AddAnnotation(res);
-                node.AddAnnotation(info);
-                info.ResolveResult = res;
-                info.Nodes.Add(node);
+                Store(resolver, node, res);
             };
             navigator.ProcessConversion += (expression, res, conversion, targetType) =>
             {
