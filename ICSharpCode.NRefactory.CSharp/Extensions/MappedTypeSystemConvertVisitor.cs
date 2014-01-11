@@ -77,15 +77,19 @@ namespace ICSharpCode.NRefactory.Extensions
         {
             var ev = (IUnresolvedEvent)base.VisitCustomEventDeclaration(node);
             if (ev.AddAccessor != null)
-                ev.AddAccessor.Declaration = ev.AddAccessor;
+                ev.AddAccessor.Declaration = node.AddAccessor;
             if (ev.RemoveAccessor != null)
-                ev.RemoveAccessor.Declaration = ev.RemoveAccessor;
+                ev.RemoveAccessor.Declaration = node.RemoveAccessor;
 
             return SetDecl(ev, node);
         }
         public override IUnresolvedEntity VisitEventDeclaration(EventDeclaration node)
         {
             var ev = (IUnresolvedEvent)base.VisitEventDeclaration(node);
+            //if (ev.AddAccessor != null)
+            //    ev.AddAccessor.Declaration = node.AddAccessor;
+            //if (ev.RemoveAccessor != null)
+            //    ev.RemoveAccessor.Declaration = node.RemoveAccessor;
             return SetDecl(ev, node);
         }
 
@@ -121,6 +125,8 @@ namespace ICSharpCode.NRefactory.Extensions
 
         private IUnresolvedEntity SetDecl(IUnresolvedEntity unresolvedEntity, object decl)
         {
+            if(decl==unresolvedEntity)
+                throw new System.Exception();
             unresolvedEntity.Declaration = decl;
             return unresolvedEntity;
         }

@@ -324,8 +324,21 @@ namespace ICSharpCode.NRefactory.Extensions
             if (me2 != null)
             {
                 var decl = me2.GetDeclaration();
+                if (decl == null)
+                {
+                    if (me2.SymbolKind == SymbolKind.Accessor)
+                    {
+                        var me3 = me as IMethod;
+                        var owner = me3.AccessorOwner;
+                        if (owner!=null && owner.SymbolKind == SymbolKind.Event)
+                        {
+                            return true;
+                        }
+                    }
+                }
                 if (decl is EventDeclaration)
                     return true;
+
                 else if (decl is PropertyDeclaration)
                 {
                     var pe2 = (PropertyDeclaration)decl;
