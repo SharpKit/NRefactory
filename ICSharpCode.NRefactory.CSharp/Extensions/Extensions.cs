@@ -155,13 +155,6 @@ namespace ICSharpCode.NRefactory.Extensions
         {
             return me.DeclaringTypeDefinition;
         }
-        public static bool IsGenericMethodArgument(this IType ce)
-        {
-            if (ce.Kind != TypeKind.TypeParameter)
-                return false;
-            var prm = (ITypeParameter)ce;
-            return prm.OwnerType == SymbolKind.Method;
-        }
         public static IType GetBaseType(this IType ce)
         {
             if (ce.Kind == TypeKind.Interface)
@@ -390,6 +383,14 @@ namespace ICSharpCode.NRefactory.Extensions
             var prm = (ITypeParameter)tr;
             return prm.OwnerType == SymbolKind.TypeDefinition;
         }
+        public static bool IsGenericMethodArgument(this IType ce)
+        {
+            if (ce.Kind != TypeKind.TypeParameter)
+                return false;
+            var prm = (ITypeParameter)ce;
+            return prm.OwnerType == SymbolKind.Method;
+        }
+
         public static string GetFileOrigin(this ITypeDefinition ce)
         {
             var part = ce.Parts.Where(t => t.UnresolvedFile != null).FirstOrDefault();
