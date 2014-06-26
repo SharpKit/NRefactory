@@ -37,6 +37,11 @@ namespace ICSharpCode.NRefactory.Extensions
                 return null;
             return p.Tag as NProject;
         }
+        public static NProject GetNProject(this IAssembly me)
+        {
+            var p = me.UnresolvedAssembly as IProjectContent;
+            return p.GetNProject();
+        }
         public static void SetResolveResult(this AstNode node, ResolveResult res)
         {
             node.AddAnnotation(res);
