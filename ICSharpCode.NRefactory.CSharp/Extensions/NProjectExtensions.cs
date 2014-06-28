@@ -11,6 +11,11 @@ namespace ICSharpCode.NRefactory.Extensions
 {
     public static class NProjectExtensions
     {
+        public static NProject GetNProject(this ICompilation comp)
+        {
+            return (NProject)comp.CacheManager.GetShared(typeof(NProject));
+        }
+
         public static NFile GetNFile(this IUnresolvedFile file)
         {
             return file.Tag as NFile;
@@ -27,21 +32,24 @@ namespace ICSharpCode.NRefactory.Extensions
         }
         public static NProject GetNProject(this IEntity me)
         {
-            var p = me.ParentAssembly.UnresolvedAssembly as IProjectContent;
-            return p.GetNProject();
+            return me.ParentAssembly.GetNProject();
         }
-        public static NProject GetNProject(this IProjectContent project)
+        public static NProject GetNProject(this IAssembly asm)
         {
-            var p = project as CSharpProjectContent;
-            if (p == null)
-                return null;
-            return p.Tag as NProject;
+            return asm.Compilation.GetNProject();
         }
-        public static NProject GetNProject(this IAssembly me)
-        {
-            var p = me.UnresolvedAssembly as IProjectContent;
-            return p.GetNProject();
-        }
+        // public static NProject GetNProject(this IAssembly me)
+        // {
+            // var p = me.UnresolvedAssembly as IProjectContent;
+            // return p.GetNProject();
+        // }
+        //public static NProject GetNProject(this IProjectContent project)
+        //{
+        //    var p = project as CSharpProjectContent;
+        //    if (p == null)
+        //        return null;
+        //    return p.Tag as NProject;
+        //}
         public static void SetResolveResult(this AstNode node, ResolveResult res)
         {
             node.AddAnnotation(res);

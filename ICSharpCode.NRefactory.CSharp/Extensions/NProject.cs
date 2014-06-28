@@ -62,6 +62,7 @@ namespace ICSharpCode.NRefactory.Extensions
             ProjectContent = (CSharpProjectContent)ProjectContent.AddOrUpdateFiles(NFiles.Select(t => t.UnresolvedFile));
             ProjectContent.Tag = this;
             ms = StopwatchHelper.TimeInMs(() => Compilation = ProjectContent.CreateCompilation());
+            Compilation.CacheManager.SetShared(typeof(NProject), this);
             FormatLine("CreateCompilation {0}ms", ms);
             //Navigator = CreateNavigator(null);
             //ApplyNavigator will happen BeforeExport only on needed files, in parallel

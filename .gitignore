@@ -1,6 +1,8 @@
 bin
 obj
 *.suo
+*.ide
+*.user
 /lib/*.dll
 /ICSharpCode.NRefactory.Tests/PartCover/*
 _ReSharper*/*
