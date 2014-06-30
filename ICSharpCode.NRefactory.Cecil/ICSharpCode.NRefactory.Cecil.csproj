@@ -34,6 +34,15 @@
     <ConsolePause>false</ConsolePause>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'net_4_5_Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -46,10 +55,17 @@
     <Compile Include="CecilLoader.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\cecil\Mono.Cecil.csproj">
+<!--    <ProjectReference Include="..\..\cecil\Mono.Cecil.csproj">
       <Project>{d68133bd-1e63-496e-9ede-4fbdbf77b486}</Project>
       <Name>Mono.Cecil</Name>
     </ProjectReference>
+-->
+
+    <Reference Include="ICSharpCode.NRefactory.Cecil">
+      <HintPath Condition=" '$(Configuration)' == 'Debug'">..\..\cecil\bin\Debug/Mono.Cecil.dll</HintPath>
+      <HintPath Condition=" '$(Configuration)' == 'net_4_5_Release'">..\..\cecil\bin\net_4_0_Release/Mono.Cecil.dll</HintPath>
+    </Reference>
+
     <ProjectReference Include="..\ICSharpCode.NRefactory\ICSharpCode.NRefactory.csproj">
       <Project>{3B2A5653-EC97-4001-BB9B-D90F1AF2C371}</Project>
       <Name>ICSharpCode.NRefactory</Name>
