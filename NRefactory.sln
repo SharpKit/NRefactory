@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio Express 2013 for Web
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DC98210E-1646-483B-819A-2BB8272461E4}"
 	ProjectSection(SolutionItems) = preProject
 		Packages\ICSharpCode.NRefactory.nuspec = Packages\ICSharpCode.NRefactory.nuspec
@@ -26,8 +28,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICSharpCode.NRefactory.CSharp.AstVerifier", "ICSharpCode.NRefactory.CSharp.AstVerifier\ICSharpCode.NRefactory.CSharp.AstVerifier.csproj", "{961DADFA-7CE6-429F-BC22-47630D6DB826}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICSharpCode.NRefactory.Demo", "ICSharpCode.NRefactory.Demo\ICSharpCode.NRefactory.Demo.csproj", "{9C19E629-C93E-4ACB-9A4B-13072B5AEF9D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IKVM.Reflection", "..\ikvm\reflect\IKVM.Reflection.csproj", "{4CB170EF-DFE6-4A56-9E1B-A85449E827A7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICSharpCode.NRefactory.IKVM", "ICSharpCode.NRefactory.IKVM\ICSharpCode.NRefactory.IKVM.csproj", "{A727169F-D94F-443F-B305-B057D7F3B420}"
 EndProject
@@ -189,22 +189,6 @@ Global
 		{9C19E629-C93E-4ACB-9A4B-13072B5AEF9D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9C19E629-C93E-4ACB-9A4B-13072B5AEF9D}.Release|x86.ActiveCfg = Release|x86
 		{9C19E629-C93E-4ACB-9A4B-13072B5AEF9D}.Release|x86.Build.0 = Release|x86
-		{4CB170EF-DFE6-4A56-9E1B-A85449E827A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4CB170EF-DFE6-4A56-9E1B-A85449E827A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4CB170EF-DFE6-4A56-9E1B-A85449E827A7}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{4CB170EF-DFE6-4A56-9E1B-A85449E827A7}.Debug|x86.Build.0 = Debug|Any CPU
-		{4CB170EF-DFE6-4A56-9E1B-A85449E827A7}.net_4_5_Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4CB170EF-DFE6-4A56-9E1B-A85449E827A7}.net_4_5_Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4CB170EF-DFE6-4A56-9E1B-A85449E827A7}.net_4_5_Debug|x86.ActiveCfg = Debug|Any CPU
-		{4CB170EF-DFE6-4A56-9E1B-A85449E827A7}.net_4_5_Debug|x86.Build.0 = Debug|Any CPU
-		{4CB170EF-DFE6-4A56-9E1B-A85449E827A7}.net_4_5_Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4CB170EF-DFE6-4A56-9E1B-A85449E827A7}.net_4_5_Release|Any CPU.Build.0 = Release|Any CPU
-		{4CB170EF-DFE6-4A56-9E1B-A85449E827A7}.net_4_5_Release|x86.ActiveCfg = Release|Any CPU
-		{4CB170EF-DFE6-4A56-9E1B-A85449E827A7}.net_4_5_Release|x86.Build.0 = Release|Any CPU
-		{4CB170EF-DFE6-4A56-9E1B-A85449E827A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4CB170EF-DFE6-4A56-9E1B-A85449E827A7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4CB170EF-DFE6-4A56-9E1B-A85449E827A7}.Release|x86.ActiveCfg = Release|Any CPU
-		{4CB170EF-DFE6-4A56-9E1B-A85449E827A7}.Release|x86.Build.0 = Release|Any CPU
 		{A727169F-D94F-443F-B305-B057D7F3B420}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A727169F-D94F-443F-B305-B057D7F3B420}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A727169F-D94F-443F-B305-B057D7F3B420}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -241,14 +225,13 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{63D3B27A-D966-4902-90B3-30290E1692F1} = {34C96E40-0CF7-49AF-B088-38C2AAEF7C7F}
 		{A7EEF7F8-238F-459D-95A9-96467539641D} = {34C96E40-0CF7-49AF-B088-38C2AAEF7C7F}
 		{D81206EF-3DCA-4A30-897B-E262A2AD9EE3} = {34C96E40-0CF7-49AF-B088-38C2AAEF7C7F}
 		{DC393B66-92ED-4CAD-AB25-CFEF23F3D7C6} = {34C96E40-0CF7-49AF-B088-38C2AAEF7C7F}
 		{961DADFA-7CE6-429F-BC22-47630D6DB826} = {34C96E40-0CF7-49AF-B088-38C2AAEF7C7F}
 		{9C19E629-C93E-4ACB-9A4B-13072B5AEF9D} = {34C96E40-0CF7-49AF-B088-38C2AAEF7C7F}
-		{4CB170EF-DFE6-4A56-9E1B-A85449E827A7} = {34C96E40-0CF7-49AF-B088-38C2AAEF7C7F}
 		{A727169F-D94F-443F-B305-B057D7F3B420} = {34C96E40-0CF7-49AF-B088-38C2AAEF7C7F}
-		{63D3B27A-D966-4902-90B3-30290E1692F1} = {34C96E40-0CF7-49AF-B088-38C2AAEF7C7F}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = ICSharpCode.NRefactory.Demo\ICSharpCode.NRefactory.Demo.csproj
