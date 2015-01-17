@@ -10,7 +10,7 @@ using ICSharpCode.NRefactory.TypeSystem;
 
 namespace ICSharpCode.NRefactory.Extensions
 {
-    public class NAssemblyCache
+    public class NAssemblyCache : IDisposable
     {
         public NAssemblyCache()
         {
@@ -101,6 +101,11 @@ namespace ICSharpCode.NRefactory.Extensions
             asm.UnresolvedAssembly = LoadAssemblyWithCache(filename);
         }
 
+
+        public void Dispose()
+        {
+            IdleTimer.Dispose();
+        }
     }
 
 
