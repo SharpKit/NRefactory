@@ -24,7 +24,7 @@ namespace ICSharpCode.NRefactory.TypeSystem.Implementation
 	/// Default implementation of <see cref="IUnresolvedField"/>.
 	/// </summary>
 	[Serializable]
-	public partial class DefaultUnresolvedField : AbstractUnresolvedMember, IUnresolvedField
+	public class DefaultUnresolvedField : AbstractUnresolvedMember, IUnresolvedField
 	{
 		IConstantValue constantValue;
 		

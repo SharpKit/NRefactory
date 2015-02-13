@@ -24,6 +24,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using ICSharpCode.NRefactory.Refactoring;
 
 namespace ICSharpCode.NRefactory.CSharp.Refactoring
 {
@@ -71,7 +72,7 @@ namespace ICSharpCode.NRefactory.CSharp.Refactoring
 		/// <remarks>
 		/// Although the type is <see cref="object"/>, there is a restriction: The instance
 		/// used must behave well as a key (for instance in a hash table). Additionaly, this
-		/// value must be independent of the specific <see cref="ICodeIssueProvider"/> instance
+		/// value must be independent of the specific <see cref="CodeIssueProvider"/> instance
 		/// which created it. In other words two different instances of the same issue provider
 		/// implementation should use the same sibling keys for the same kinds of issues.
 		/// </remarks>
@@ -79,6 +80,22 @@ namespace ICSharpCode.NRefactory.CSharp.Refactoring
 		public object SiblingKey {
 			get;
 			private set;
+		}
+
+		Severity severity = Severity.Suggestion;
+
+		/// <summary>
+		/// Gets or sets the severity of the code action. 
+		/// Actions are sorted according to their Severity.
+		/// </summary>
+		/// <value>The severity.</value>
+		public Severity Severity {
+			get {
+				return severity;
+			}
+			set {
+				severity = value;
+			}
 		}
 
 		const string defaultSiblingKey = "default";

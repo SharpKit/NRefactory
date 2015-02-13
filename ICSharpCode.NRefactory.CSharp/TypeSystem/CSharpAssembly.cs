@@ -27,7 +27,7 @@ using ICSharpCode.NRefactory.Utils;
 
 namespace ICSharpCode.NRefactory.CSharp.TypeSystem
 {
-    public partial class CSharpAssembly : IAssembly
+	public partial class CSharpAssembly : IAssembly
 	{
 		readonly ICompilation compilation;
 		readonly ITypeResolveContext context;
@@ -327,6 +327,11 @@ namespace ICSharpCode.NRefactory.CSharp.TypeSystem
 				} else {
 					return assembly.GetTypeDefinition(key);
 				}
+			}
+
+			public ISymbolReference ToReference()
+			{
+				return new NamespaceReference(new DefaultAssemblyReference(assembly.AssemblyName), fullName);
 			}
 		}
 	}

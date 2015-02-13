@@ -12,11 +12,11 @@ namespace ICSharpCode.NRefactory.CSharp
         R VisitCSharpInvocationResolveResult(CSharpInvocationResolveResult res);
         R VisitLambdaResolveResult(LambdaResolveResult res);
         R VisitMethodGroupResolveResult(MethodGroupResolveResult res);
-
-
         R VisitDynamicInvocationResolveResult(DynamicInvocationResolveResult res);
-        R VisitDynamicMemberResolveResult(DynamicMemberResolveResult res);
-    }
+		R VisitDynamicMemberResolveResult(DynamicMemberResolveResult res);
+		R VisitAwaitResolveResult(AwaitResolveResult res);
+
+	}
 }
 
 namespace ICSharpCode.NRefactory.CSharp.Resolver
@@ -42,5 +42,10 @@ namespace ICSharpCode.NRefactory.CSharp.Resolver
     {
         public override R AcceptVisitor<R>(IResolveResultVisitor<R> visitor) { return ((ICSharpResolveResultVisitor<R>)visitor).VisitDynamicMemberResolveResult(this); }
     }
+	partial class AwaitResolveResult
+	{
+		public override R AcceptVisitor<R>(IResolveResultVisitor<R> visitor) { return ((ICSharpResolveResultVisitor<R>)visitor).VisitAwaitResolveResult(this); }
+	}
+
 }
 

@@ -26,7 +26,7 @@ namespace ICSharpCode.NRefactory.Semantics
 	/// <summary>
 	/// Represents a unary/binary/ternary operator invocation.
 	/// </summary>
-    public partial class OperatorResolveResult : ResolveResult
+	public partial class OperatorResolveResult : ResolveResult
 	{
 		readonly ExpressionType operatorType;
 		readonly IMethod userDefinedOperatorMethod;

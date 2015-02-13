@@ -24,7 +24,7 @@ namespace ICSharpCode.NRefactory.Semantics
 	/// <summary>
 	/// Resolve result representing a 'foreach' loop.
 	/// </summary>
-	public class ForEachResolveResult : ResolveResult
+	public partial class ForEachResolveResult : ResolveResult
 	{
 		/// <summary>
 		/// Gets the semantic tree for the call to GetEnumerator.

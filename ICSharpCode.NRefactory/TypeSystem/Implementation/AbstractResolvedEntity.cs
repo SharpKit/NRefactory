@@ -25,7 +25,7 @@ namespace ICSharpCode.NRefactory.TypeSystem.Implementation
 	/// <summary>
 	/// Implementation of <see cref="IEntity"/> that resolves an unresolved entity.
 	/// </summary>
-    public abstract partial class AbstractResolvedEntity : IEntity
+	public abstract partial class AbstractResolvedEntity : IEntity
 	{
 		protected readonly IUnresolvedEntity unresolved;
 		protected readonly ITypeResolveContext parentContext;
@@ -90,6 +90,8 @@ namespace ICSharpCode.NRefactory.TypeSystem.Implementation
 			else
 				return null;
 		}
+
+		public abstract ISymbolReference ToReference();
 		
 		public bool IsStatic { get { return unresolved.IsStatic; } }
 		public bool IsAbstract { get { return unresolved.IsAbstract; } }

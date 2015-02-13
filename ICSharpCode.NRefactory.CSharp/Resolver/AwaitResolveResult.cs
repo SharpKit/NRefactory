@@ -28,7 +28,7 @@ namespace ICSharpCode.NRefactory.CSharp.Resolver
 	/// <summary>
 	/// Represents the result of an await expression.
 	/// </summary>
-	public class AwaitResolveResult : ResolveResult
+	public partial class AwaitResolveResult : ResolveResult
 	{
 		/// <summary>
 		/// The method representing the GetAwaiter() call. Can be an <see cref="InvocationResolveResult"/> or a <see cref="DynamicInvocationResolveResult"/>.

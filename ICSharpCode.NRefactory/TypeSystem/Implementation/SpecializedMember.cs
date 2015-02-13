@@ -30,7 +30,7 @@ namespace ICSharpCode.NRefactory.TypeSystem.Implementation
 	/// <summary>
 	/// Represents a SpecializedMember (a member on which type substitution has been performed).
 	/// </summary>
-    public abstract partial class SpecializedMember : IMember
+	public abstract partial class SpecializedMember : IMember
 	{
 		protected readonly IMember baseMember;
 		TypeParameterSubstitution substitution;
@@ -71,10 +71,20 @@ namespace ICSharpCode.NRefactory.TypeSystem.Implementation
 		
 		public virtual IMemberReference ToMemberReference()
 		{
+			return ToReference();
+		}
+		
+		public virtual IMemberReference ToReference()
+		{
 			return new SpecializingMemberReference(
-				baseMember.ToMemberReference(),
+				baseMember.ToReference(),
 				ToTypeReference(substitution.ClassTypeArguments),
 				null);
+		}
+		
+		ISymbolReference ISymbol.ToReference()
+		{
+			return ToReference();
 		}
 		
 		internal static IList<ITypeReference> ToTypeReference(IList<IType> typeArguments)

@@ -24,7 +24,7 @@ namespace ICSharpCode.NRefactory.Semantics
 	/// <summary>
 	/// Represents an ambiguous type resolve result.
 	/// </summary>
-	public class AmbiguousTypeResolveResult : TypeResolveResult
+	public partial class AmbiguousTypeResolveResult : TypeResolveResult
 	{
 		public AmbiguousTypeResolveResult(IType type) : base(type)
 		{

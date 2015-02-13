@@ -25,7 +25,7 @@ namespace ICSharpCode.NRefactory.Semantics
 	/// Resolve result for a C# 'is' expression.
 	/// "Input is TargetType".
 	/// </summary>
-    public partial class TypeIsResolveResult : ResolveResult
+	public partial class TypeIsResolveResult : ResolveResult
 	{
 		public readonly ResolveResult Input;
 		/// <summary>

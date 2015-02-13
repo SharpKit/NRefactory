@@ -27,7 +27,7 @@ namespace ICSharpCode.NRefactory.TypeSystem.Implementation
 	/// Base class for <see cref="IUnresolvedEntity"/> implementations.
 	/// </summary>
 	[Serializable]
-    public abstract partial class AbstractUnresolvedEntity : IUnresolvedEntity, IFreezable
+	public abstract partial class AbstractUnresolvedEntity : IUnresolvedEntity, IFreezable
 	{
 		// possible optimizations to reduce the memory usage of AbstractUnresolvedEntity:
 		// - store regions in more compact form (e.g. assume both file names are identical; use ushort for columns)
@@ -54,6 +54,7 @@ namespace ICSharpCode.NRefactory.TypeSystem.Implementation
 		internal const ushort FlagAddDefaultConstructorIfRequired = 0x0040;
 		internal const ushort FlagHasExtensionMethods = 0x0080;
 		internal const ushort FlagHasNoExtensionMethods = 0x0100;
+		internal const ushort FlagPartialTypeDefinition = 0x0200;
 		// flags for AbstractUnresolvedMember:
 		internal const ushort FlagExplicitInterfaceImplementation = 0x0040;
 		internal const ushort FlagVirtual = 0x0080;

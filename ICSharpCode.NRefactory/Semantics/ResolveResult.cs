@@ -26,7 +26,7 @@ namespace ICSharpCode.NRefactory.Semantics
 	/// <summary>
 	/// Represents the result of resolving an expression.
 	/// </summary>
-    public partial class ResolveResult
+	public partial class ResolveResult
 	{
 		readonly IType type;
 		

@@ -93,25 +93,76 @@ namespace ICSharpCode.NRefactory.Semantics
         public override R AcceptVisitor<R>(IResolveResultVisitor<R> visitor) { return visitor.VisitNamedArgumentResolveResult(this); }
     }
 
-    public interface IResolveResultVisitor<out R>
+	partial class UnknownMethodResolveResult
+	{
+		[DebuggerStepThrough]
+		public override R AcceptVisitor<R>(IResolveResultVisitor<R> visitor) { return visitor.VisitUnknownMethodResolveResult(this); }
+	}
+	partial class AmbiguousTypeResolveResult
+	{
+		[DebuggerStepThrough]
+		public override R AcceptVisitor<R>(IResolveResultVisitor<R> visitor) { return visitor.VisitAmbiguousTypeResolveResult(this); }
+	}
+
+	partial class SizeOfResolveResult
+	{
+		[DebuggerStepThrough]
+		public override R AcceptVisitor<R>(IResolveResultVisitor<R> visitor) { return visitor.VisitSizeOfResolveResult(this); }
+	}
+	partial class ErrorResolveResult
+	{
+		[DebuggerStepThrough]
+		public override R AcceptVisitor<R>(IResolveResultVisitor<R> visitor) { return visitor.VisitErrorResolveResult(this); }
+	}
+	partial class ForEachResolveResult
+	{
+		[DebuggerStepThrough]
+		public override R AcceptVisitor<R>(IResolveResultVisitor<R> visitor) { return visitor.VisitForEachResolveResult(this); }
+	}
+	partial class NamespaceResolveResult
+	{
+		[DebuggerStepThrough]
+		public override R AcceptVisitor<R>(IResolveResultVisitor<R> visitor) { return visitor.VisitNamespaceResolveResult(this); }
+	}
+	partial class UnknownMemberResolveResult
+	{
+		[DebuggerStepThrough]
+		public override R AcceptVisitor<R>(IResolveResultVisitor<R> visitor) { return visitor.VisitUnknownMemberResolveResult(this); }
+	}
+	partial class UnknownIdentifierResolveResult
+	{
+		[DebuggerStepThrough]
+		public override R AcceptVisitor<R>(IResolveResultVisitor<R> visitor) { return visitor.VisitUnknownIdentifierResolveResult(this); }
+	}
+
+
+	public interface IResolveResultVisitor<out R>
     {
-        R VisitResolveResult(ResolveResult res);
-        R VisitInvocationResolveResult(InvocationResolveResult res);
-        R VisitMemberResolveResult(MemberResolveResult res);
-        R VisitThisResolveResult(ThisResolveResult res);
-        R VisitConstantResolveResult(ConstantResolveResult res);
-        R VisitConversionResolveResult(ConversionResolveResult res);
-        R VisitLocalResolveResult(LocalResolveResult res);
-        R VisitTypeResolveResult(TypeResolveResult res);
-        R VisitTypeOfResolveResult(TypeOfResolveResult res);
-        R VisitOperatorResolveResult(OperatorResolveResult res);
-        R VisitTypeIsResolveResult(TypeIsResolveResult res);
-        R VisitArrayCreateResolveResult(ArrayCreateResolveResult res);
-        R VisitArrayAccessResolveResult(ArrayAccessResolveResult res);
-        R VisitInitializedObjectResolveResult(InitializedObjectResolveResult res);
-        R VisitByReferenceResolveResult(ByReferenceResolveResult res);
-        R VisitNamedArgumentResolveResult(NamedArgumentResolveResult res);
-    }
+		R VisitResolveResult(ResolveResult res);
+		R VisitMemberResolveResult(MemberResolveResult res);
+		R VisitAmbiguousTypeResolveResult(AmbiguousTypeResolveResult res);
+		R VisitUnknownMethodResolveResult(UnknownMethodResolveResult res);
+		R VisitInvocationResolveResult(InvocationResolveResult res);
+		R VisitThisResolveResult(ThisResolveResult res);
+		R VisitConstantResolveResult(ConstantResolveResult res);
+		R VisitConversionResolveResult(ConversionResolveResult res);
+		R VisitLocalResolveResult(LocalResolveResult res);
+		R VisitTypeResolveResult(TypeResolveResult res);
+		R VisitTypeOfResolveResult(TypeOfResolveResult res);
+		R VisitOperatorResolveResult(OperatorResolveResult res);
+		R VisitTypeIsResolveResult(TypeIsResolveResult res);
+		R VisitArrayCreateResolveResult(ArrayCreateResolveResult res);
+		R VisitArrayAccessResolveResult(ArrayAccessResolveResult res);
+		R VisitInitializedObjectResolveResult(InitializedObjectResolveResult res);
+		R VisitByReferenceResolveResult(ByReferenceResolveResult res);
+		R VisitNamedArgumentResolveResult(NamedArgumentResolveResult res);
+		R VisitSizeOfResolveResult(SizeOfResolveResult res);
+		R VisitErrorResolveResult(ErrorResolveResult res);
+		R VisitForEachResolveResult(ForEachResolveResult res);
+		R VisitNamespaceResolveResult(NamespaceResolveResult res);
+		R VisitUnknownMemberResolveResult(UnknownMemberResolveResult res);
+		R VisitUnknownIdentifierResolveResult(UnknownIdentifierResolveResult res);
+	}
 }
 
 
@@ -174,3 +225,7 @@ namespace ICSharpCode.NRefactory.TypeSystem.Implementation
         public object Declaration { get; set; }
     }
 }
+ 
+ 
+ 
+ 

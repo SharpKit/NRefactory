@@ -25,7 +25,7 @@ namespace ICSharpCode.NRefactory.Semantics
 	/// Refers to the object that is currently being initialized.
 	/// Used within <see cref="InvocationResolveResult.InitializerStatements"/>.
 	/// </summary>
-    public partial class InitializedObjectResolveResult : ResolveResult
+	public partial class InitializedObjectResolveResult : ResolveResult
 	{
 		public InitializedObjectResolveResult(IType type) : base(type)
 		{

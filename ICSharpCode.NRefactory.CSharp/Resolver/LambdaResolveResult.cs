@@ -28,7 +28,7 @@ namespace ICSharpCode.NRefactory.CSharp.Resolver
 	/// Note: the lambda has no type.
 	/// To retrieve the delegate type, look at the anonymous function conversion.
 	/// </summary>
-    public abstract partial class LambdaResolveResult : ResolveResult
+	public abstract partial class LambdaResolveResult : ResolveResult
 	{
 		protected LambdaResolveResult() : base(SpecialType.UnknownType)
 		{

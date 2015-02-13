@@ -25,7 +25,7 @@ namespace ICSharpCode.NRefactory.Semantics
 	/// <summary>
 	/// Represents that an expression resolved to a namespace.
 	/// </summary>
-	public class NamespaceResolveResult : ResolveResult
+	public partial class NamespaceResolveResult : ResolveResult
 	{
 		readonly INamespace ns;
 		

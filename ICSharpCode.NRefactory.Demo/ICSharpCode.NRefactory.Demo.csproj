@@ -2,13 +2,14 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
     <ProjectGuid>{9C19E629-C93E-4ACB-9A4B-13072B5AEF9D}</ProjectGuid>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <OutputType>WinExe</OutputType>
     <RootNamespace>ICSharpCode.NRefactory.Demo</RootNamespace>
     <AssemblyName>ICSharpCode.NRefactory.Demo</AssemblyName>
     <AppDesignerFolder>Properties</AppDesignerFolder>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
     <OutputPath>..\bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
@@ -52,9 +53,11 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'net_4_5_Debug|x86' ">
     <WarningLevel>4</WarningLevel>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'net_4_5_Debug|AnyCPU' ">
     <WarningLevel>4</WarningLevel>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'net_4_5_Release' ">
     <DebugType>PdbOnly</DebugType>
@@ -65,13 +68,17 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'net_4_5_Release|x86' ">
     <WarningLevel>4</WarningLevel>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'net_4_5_Release|AnyCPU' ">
     <WarningLevel>4</WarningLevel>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />

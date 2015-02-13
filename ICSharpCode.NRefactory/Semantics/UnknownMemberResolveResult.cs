@@ -28,7 +28,7 @@ namespace ICSharpCode.NRefactory.Semantics
 	/// <summary>
 	/// Represents an unknown member.
 	/// </summary>
-	public class UnknownMemberResolveResult : ResolveResult
+	public partial class UnknownMemberResolveResult : ResolveResult
 	{
 		readonly IType targetType;
 		readonly string memberName;
@@ -72,7 +72,7 @@ namespace ICSharpCode.NRefactory.Semantics
 	/// <summary>
 	/// Represents an unknown method.
 	/// </summary>
-	public class UnknownMethodResolveResult : UnknownMemberResolveResult
+	public partial class UnknownMethodResolveResult : UnknownMemberResolveResult
 	{
 		readonly ReadOnlyCollection<IParameter> parameters;
 		
@@ -90,7 +90,7 @@ namespace ICSharpCode.NRefactory.Semantics
 	/// <summary>
 	/// Represents an unknown identifier.
 	/// </summary>
-	public class UnknownIdentifierResolveResult : ResolveResult
+	public partial class UnknownIdentifierResolveResult : ResolveResult
 	{
 		readonly string identifier;
 		readonly int typeArgumentCount;

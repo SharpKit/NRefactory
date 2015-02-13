@@ -48,7 +48,7 @@ namespace ICSharpCode.NRefactory.CSharp
 		Line = 12
 	}
 
-	public class LinePreprocssorDirective : PreProcessorDirective
+	public class LinePreprocessorDirective : PreProcessorDirective
 	{
 		public int LineNumber {
 			get;
@@ -60,18 +60,20 @@ namespace ICSharpCode.NRefactory.CSharp
 			set;
 		}
 
-		public LinePreprocssorDirective(TextLocation startLocation, TextLocation endLocation) : base (PreProcessorDirectiveType.Line, startLocation, endLocation)
+		public LinePreprocessorDirective(TextLocation startLocation, TextLocation endLocation) : base (PreProcessorDirectiveType.Line, startLocation, endLocation)
 		{
 		}
 
-		public LinePreprocssorDirective(string argument = null) : base (PreProcessorDirectiveType.Line, argument)
+		public LinePreprocessorDirective(string argument = null) : base (PreProcessorDirectiveType.Line, argument)
 		{
 		}
 	}
 
-	public class PragmaWarningPreprocssorDirective : PreProcessorDirective
+	public class PragmaWarningPreprocessorDirective : PreProcessorDirective
 	{
 		public static readonly Role<PrimitiveExpression>  WarningRole = new Role<PrimitiveExpression> ("Warning");
+
+		public static readonly TokenRole PragmaKeywordRole = new TokenRole ("#pragma");
 		public static readonly TokenRole WarningKeywordRole = new TokenRole ("warning");
 		public static readonly TokenRole DisableKeywordRole = new TokenRole ("disable");
 		public static readonly TokenRole RestoreKeywordRole = new TokenRole ("restore");
@@ -80,6 +82,10 @@ namespace ICSharpCode.NRefactory.CSharp
 			get {
 				return !DisableToken.IsNull;
 			}
+		}
+
+		public CSharpTokenNode PragmaToken {
+			get { return GetChildByRole (PragmaKeywordRole); }
 		}
 
 		public CSharpTokenNode WarningToken {
@@ -98,11 +104,20 @@ namespace ICSharpCode.NRefactory.CSharp
 			get { return GetChildrenByRole(WarningRole); }
 		}
 
-		public PragmaWarningPreprocssorDirective(TextLocation startLocation, TextLocation endLocation) : base (PreProcessorDirectiveType.Pragma, startLocation, endLocation)
+		public override TextLocation EndLocation {
+			get {
+				var child = LastChild;
+				if (child == null)
+					return base.EndLocation;
+				return child.EndLocation;
+			}
+		}
+
+		public PragmaWarningPreprocessorDirective(TextLocation startLocation, TextLocation endLocation) : base (PreProcessorDirectiveType.Pragma, startLocation, endLocation)
 		{
 		}
 
-		public PragmaWarningPreprocssorDirective(string argument = null) : base (PreProcessorDirectiveType.Pragma, argument)
+		public PragmaWarningPreprocessorDirective(string argument = null) : base (PreProcessorDirectiveType.Pragma, argument)
 		{
 		}
 

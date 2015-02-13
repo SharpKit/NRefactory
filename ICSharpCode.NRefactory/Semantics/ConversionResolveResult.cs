@@ -26,9 +26,9 @@ namespace ICSharpCode.NRefactory.Semantics
 	/// Represents an implicit or explicit type conversion.
 	/// <c>conversionResolveResult.Input.Type</c> is the source type;
 	/// <c>conversionResolveResult.Type</c> is the target type.
-	/// The <see cref="Conversion"/> property provides details about the type of conversion.
+	/// The <see cref="Conversion"/> property provides details about the kind of conversion.
 	/// </summary>
-    public partial class ConversionResolveResult : ResolveResult
+	public partial class ConversionResolveResult : ResolveResult
 	{
 		public readonly ResolveResult Input;
 		public readonly Conversion Conversion;

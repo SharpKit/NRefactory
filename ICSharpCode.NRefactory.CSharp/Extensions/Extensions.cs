@@ -484,7 +484,7 @@ namespace ICSharpCode.NRefactory.Extensions
         public static string GetFileName(this AstNode node)
         {
             var region = node.GetRegion();
-            if (region == null || region.IsEmpty)
+            if (region.IsEmpty)
                 return null;
             return region.FileName;
         }

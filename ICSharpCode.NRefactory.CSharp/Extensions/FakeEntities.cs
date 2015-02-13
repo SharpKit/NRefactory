@@ -203,12 +203,22 @@ namespace ICSharpCode.NRefactory.Extensions
             throw new NotImplementedException();
         }
 
-        #endregion
+		public IMemberReference ToReference()
+		{
+			throw new NotImplementedException();
+		}
 
-        #region ISymbol Members
+		ISymbolReference ISymbol.ToReference()
+		{
+			throw new NotImplementedException();
+		}
+
+		#endregion
+
+		#region ISymbol Members
 
 
-        public SymbolKind SymbolKind{get;private set;}
+		public SymbolKind SymbolKind{get;private set;}
 
         #endregion
     }

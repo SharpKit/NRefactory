@@ -232,6 +232,16 @@ namespace ICSharpCode.NRefactory.CSharp.Resolver
 			{
 				throw new NotSupportedException();
 			}
+			
+			ISymbolReference ISymbol.ToReference()
+			{
+				throw new NotSupportedException();
+			}
+			
+			IMemberReference IMember.ToReference()
+			{
+				throw new NotSupportedException();
+			}
 
 			TypeParameterSubstitution IMember.Substitution {
 				get {
@@ -241,6 +251,8 @@ namespace ICSharpCode.NRefactory.CSharp.Resolver
 
 			IMember IMember.Specialize(TypeParameterSubstitution substitution)
 			{
+				if (TypeParameterSubstitution.Identity.Equals(substitution))
+					return this;
 				throw new NotSupportedException();
 			}
 
@@ -320,7 +332,7 @@ namespace ICSharpCode.NRefactory.CSharp.Resolver
 			}
 		}
 		
-		sealed class LiftedUnaryOperatorMethod : UnaryOperatorMethod, OverloadResolution.ILiftedOperator
+		sealed partial class LiftedUnaryOperatorMethod : UnaryOperatorMethod, OverloadResolution.ILiftedOperator
 		{
 			UnaryOperatorMethod baseMethod;
 			
