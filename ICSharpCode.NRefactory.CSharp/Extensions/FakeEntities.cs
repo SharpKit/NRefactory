@@ -269,7 +269,7 @@ namespace ICSharpCode.NRefactory.Extensions
 
         public bool IsFixed
         {
-            get { throw new NotImplementedException(); }
+            get { return false; }
         }
 
         #endregion

@@ -5,3 +5,4 @@ obj
 /ICSharpCode.NRefactory.Tests/PartCover/*
 _ReSharper*/*
 .vs
+*.ide
