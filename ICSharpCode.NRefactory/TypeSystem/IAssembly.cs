@@ -69,7 +69,7 @@ namespace ICSharpCode.NRefactory.TypeSystem
 	/// <summary>
 	/// Represents an assembly.
 	/// </summary>
-	public partial interface IAssembly : ICompilationProvider
+    public partial interface IAssembly : ICompilationProvider
 	{
 		/// <summary>
 		/// Gets the original unresolved assembly.

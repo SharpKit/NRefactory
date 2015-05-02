@@ -25,7 +25,7 @@ namespace ICSharpCode.NRefactory.Semantics
 	/// Represents the 'this' reference.
 	/// Also used for the 'base' reference.
 	/// </summary>
-	public partial class ThisResolveResult : ResolveResult
+    public partial class ThisResolveResult : ResolveResult
 	{
 		bool causesNonVirtualInvocation;
 		

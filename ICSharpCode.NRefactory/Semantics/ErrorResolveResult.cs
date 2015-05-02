@@ -28,7 +28,7 @@ namespace ICSharpCode.NRefactory.Semantics
 	/// be erroneous if the conversion is invalid.
 	/// </summary>
 	/// <seealso cref="ResolveResult.IsError"/>.
-	public partial class ErrorResolveResult : ResolveResult
+    public partial class ErrorResolveResult : ResolveResult
 	{
 		/// <summary>
 		/// Gets an ErrorResolveResult instance with <c>Type</c> = <c>SpecialType.UnknownType</c>.

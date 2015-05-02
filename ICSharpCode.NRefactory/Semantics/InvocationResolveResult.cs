@@ -27,7 +27,7 @@ namespace ICSharpCode.NRefactory.Semantics
 	/// <summary>
 	/// Represents the result of a method, constructor or indexer invocation.
 	/// </summary>
-	public partial class InvocationResolveResult : MemberResolveResult
+    public partial class InvocationResolveResult : MemberResolveResult
 	{
 		/// <summary>
 		/// Gets the arguments that are being passed to the method, in the order the arguments are being evaluated.

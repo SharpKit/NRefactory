@@ -77,7 +77,7 @@ namespace ICSharpCode.NRefactory.CSharp.Resolver
 	/// The MethodGroupResolveResult has no type.
 	/// To retrieve the delegate type or the chosen overload, look at the method group conversion.
 	/// </summary>
-	public partial class MethodGroupResolveResult : ResolveResult
+    public partial class MethodGroupResolveResult : ResolveResult
 	{
 		readonly IList<MethodListWithDeclaringType> methodLists;
 		readonly IList<IType> typeArguments;

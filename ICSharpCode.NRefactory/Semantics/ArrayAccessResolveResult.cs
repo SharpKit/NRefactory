@@ -27,7 +27,7 @@ namespace ICSharpCode.NRefactory.Semantics
 	/// <summary>
 	/// Resolve result representing an array access.
 	/// </summary>
-	public partial class ArrayAccessResolveResult : ResolveResult
+    public partial class ArrayAccessResolveResult : ResolveResult
 	{
 		public readonly ResolveResult Array;
 		public readonly IList<ResolveResult> Indexes;

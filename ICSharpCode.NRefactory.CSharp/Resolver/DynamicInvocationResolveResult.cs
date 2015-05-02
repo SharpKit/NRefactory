@@ -45,7 +45,7 @@ namespace ICSharpCode.NRefactory.CSharp.Resolver
 	/// <summary>
 	/// Represents the result of an invocation of a member of a dynamic object.
 	/// </summary>
-	public partial class DynamicInvocationResolveResult : ResolveResult
+    public partial class DynamicInvocationResolveResult : ResolveResult
 	{
 		/// <summary>
 		/// Target of the invocation. Can be a dynamic expression or a <see cref="MethodGroupResolveResult"/>.

@@ -6,3 +6,4 @@ obj
 _ReSharper*/*
 .vs
 *.ide
+Packages/NUnit.2.6.4/

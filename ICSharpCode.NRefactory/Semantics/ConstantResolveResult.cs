@@ -30,7 +30,7 @@ namespace ICSharpCode.NRefactory.Semantics
 	/// 
 	/// Check <see cref="ResolveResult.IsCompileTimeConstant"/> to determine is a resolve result is a constant.
 	/// </summary>
-	public partial class ConstantResolveResult : ResolveResult
+    public partial class ConstantResolveResult : ResolveResult
 	{
 		object constantValue;
 		

@@ -36,7 +36,7 @@ namespace ICSharpCode.NRefactory.CSharp
 	/// It's used to hide the internals of extension method invocation in certain situation to simulate the
 	/// syntactic way of writing extension methods on semantic level.
 	/// </summary>
-	public partial class ReducedExtensionMethod : IMethod
+    public partial class ReducedExtensionMethod : IMethod
 	{
 		readonly IMethod baseMethod;
 

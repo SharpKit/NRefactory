@@ -27,7 +27,7 @@ namespace ICSharpCode.NRefactory.TypeSystem.Implementation
 	/// <summary>
 	/// Default implementation of <see cref="ITypeDefinition"/>.
 	/// </summary>
-	public partial class DefaultResolvedTypeDefinition : ITypeDefinition
+    public partial class DefaultResolvedTypeDefinition : ITypeDefinition
 	{
 		readonly ITypeResolveContext parentContext;
 		readonly IUnresolvedTypeDefinition[] parts;

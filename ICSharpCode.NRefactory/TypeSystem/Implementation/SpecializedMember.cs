@@ -30,7 +30,7 @@ namespace ICSharpCode.NRefactory.TypeSystem.Implementation
 	/// <summary>
 	/// Represents a SpecializedMember (a member on which type substitution has been performed).
 	/// </summary>
-	public abstract partial class SpecializedMember : IMember
+    public abstract partial class SpecializedMember : IMember
 	{
 		protected readonly IMember baseMember;
 		TypeParameterSubstitution substitution;

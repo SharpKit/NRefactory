@@ -27,7 +27,7 @@ namespace ICSharpCode.NRefactory.Semantics
 	/// <summary>
 	/// Resolve result representing an array creation.
 	/// </summary>
-	public partial class ArrayCreateResolveResult : ResolveResult
+    public partial class ArrayCreateResolveResult : ResolveResult
 	{
 		/// <summary>
 		/// Gets the size arguments.

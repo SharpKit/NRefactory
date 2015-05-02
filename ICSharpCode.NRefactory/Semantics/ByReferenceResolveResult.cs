@@ -27,7 +27,7 @@ namespace ICSharpCode.NRefactory.Semantics
 	/// <summary>
 	/// Represents the resolve result of an 'ref x' or 'out x' expression.
 	/// </summary>
-	public partial class ByReferenceResolveResult : ResolveResult
+    public partial class ByReferenceResolveResult : ResolveResult
 	{
 		public bool IsOut { get; private set; }
 		public bool IsRef { get { return !IsOut;} }

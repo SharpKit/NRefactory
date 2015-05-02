@@ -25,7 +25,7 @@ namespace ICSharpCode.NRefactory.TypeSystem.Implementation
 	/// <summary>
 	/// Implementation of <see cref="IEntity"/> that resolves an unresolved entity.
 	/// </summary>
-	public abstract partial class AbstractResolvedEntity : IEntity
+    public abstract partial class AbstractResolvedEntity : IEntity
 	{
 		protected readonly IUnresolvedEntity unresolved;
 		protected readonly ITypeResolveContext parentContext;

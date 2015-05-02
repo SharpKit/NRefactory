@@ -32,7 +32,7 @@ namespace ICSharpCode.NRefactory.CSharp.TypeSystem
 	/// <summary>
 	/// Produces type and member definitions from the DOM.
 	/// </summary>
-	public partial class TypeSystemConvertVisitor : DepthFirstAstVisitor<IUnresolvedEntity>
+    public partial class TypeSystemConvertVisitor : DepthFirstAstVisitor<IUnresolvedEntity>
 	{
 		/// <summary>
 		/// Version of the C# type system loader.

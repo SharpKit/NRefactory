@@ -30,7 +30,7 @@ namespace ICSharpCode.NRefactory.Semantics
 	/// Used for field/property/event access.
 	/// Also, <see cref="InvocationResolveResult"/> derives from MemberResolveResult.
 	/// </summary>
-	public partial class MemberResolveResult : ResolveResult
+    public partial class MemberResolveResult : ResolveResult
 	{
 		readonly IMember member;
 		readonly bool isConstant;

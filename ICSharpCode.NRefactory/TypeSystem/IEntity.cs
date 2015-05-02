@@ -26,7 +26,7 @@ namespace ICSharpCode.NRefactory.TypeSystem
 	/// <summary>
 	/// Represents an unresolved entity.
 	/// </summary>
-	public partial interface IUnresolvedEntity : INamedElement, IHasAccessibility
+    public partial interface IUnresolvedEntity : INamedElement, IHasAccessibility
 	{
 		/// <summary>
 		/// Gets the entity type.
@@ -93,7 +93,7 @@ namespace ICSharpCode.NRefactory.TypeSystem
 	/// <summary>
 	/// Represents a resolved entity.
 	/// </summary>
-	public partial interface IEntity : ISymbol, ICompilationProvider, INamedElement, IHasAccessibility
+    public partial interface IEntity : ISymbol, ICompilationProvider, INamedElement, IHasAccessibility
 	{
 		/// <summary>
 		/// Gets the entity type.

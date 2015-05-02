@@ -24,7 +24,7 @@ namespace ICSharpCode.NRefactory.Semantics
 	/// <summary>
 	/// Represents the 'sizeof'.
 	/// </summary>
-	public partial class SizeOfResolveResult : ResolveResult
+    public partial class SizeOfResolveResult : ResolveResult
 	{
 		readonly IType referencedType;
 		readonly int? constantValue;
