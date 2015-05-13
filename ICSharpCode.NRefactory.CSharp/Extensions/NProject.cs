@@ -76,21 +76,13 @@ namespace ICSharpCode.NRefactory.Extensions
 
         protected virtual void ParseCsFiles()
         {
-            var ms = StopwatchHelper.TimeInMs(() => NFiles.ForEachParallel(ParseSkFile, Parallel));
+            var ms = StopwatchHelper.TimeInMs(() => NFiles.ForEach(ParseSkFile));
             FormatLine("{0} Sources files {1}ms", NFiles.Count, ms);
         }
 
         List<NAssembly> AssemblyReferences;
         protected CSharpParser CSharpParser;
 
-        SyntaxTree ParseFile(string file)
-        {
-            using (var fs = File.OpenRead(file))
-            {
-                var unit = CSharpParser.Parse(fs, file);
-                return unit;
-            }
-        }
 
 
         void Store(CSharpAstResolver resolver, AstNode node, ResolveResult res)
@@ -211,7 +203,11 @@ namespace ICSharpCode.NRefactory.Extensions
 
         private void ParseSkFile(NFile file)
         {
-            file.SyntaxTree = ParseFile(file.Filename);
+            using (var fs = File.OpenRead(file.Filename))
+            {
+                file.SyntaxTree = CSharpParser.Parse(fs, file.Filename);
+                fs.Close();
+            }
 
             var q = new QueryExpressionExpander().ExpandQueryExpressions(file.SyntaxTree);
             if (q != null)

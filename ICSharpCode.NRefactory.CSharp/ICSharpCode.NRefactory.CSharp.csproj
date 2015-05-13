@@ -404,6 +404,10 @@
     <Compile Include="Util\CloneableStack.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\cecil\Mono.Cecil.csproj">
+      <Project>{d68133bd-1e63-496e-9ede-4fbdbf77b486}</Project>
+      <Name>Mono.Cecil</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ICSharpCode.NRefactory.Cecil\ICSharpCode.NRefactory.Cecil.csproj">
       <Project>{2b8f4f83-c2b3-4e84-a27b-8dee1be0e006}</Project>
       <Name>ICSharpCode.NRefactory.Cecil</Name>
