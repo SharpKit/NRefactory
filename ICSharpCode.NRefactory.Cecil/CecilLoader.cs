@@ -435,9 +435,6 @@ namespace ICSharpCode.NRefactory.TypeSystem
 			if (assembly.HasCustomAttributes) {
 				AddCustomAttributes(assembly.CustomAttributes, outputList);
 			}
-			if (assembly.HasSecurityDeclarations) {
-				AddSecurityAttributes(assembly.SecurityDeclarations, outputList);
-			}
 			
 			// AssemblyVersionAttribute
 			if (assembly.Name.Version != null) {
@@ -601,9 +598,6 @@ namespace ICSharpCode.NRefactory.TypeSystem
 			if (methodDefinition.HasCustomAttributes) {
 				AddCustomAttributes(methodDefinition.CustomAttributes, attributes);
 			}
-			if (methodDefinition.HasSecurityDeclarations) {
-				AddSecurityAttributes(methodDefinition.SecurityDeclarations, attributes);
-			}
 			if (methodDefinition.MethodReturnType.HasMarshalInfo) {
 				returnTypeAttributes.Add(ConvertMarshalInfo(methodDefinition.MethodReturnType.MarshalInfo));
 			}
@@ -671,9 +665,6 @@ namespace ICSharpCode.NRefactory.TypeSystem
 			
 			if (typeDefinition.HasCustomAttributes) {
 				AddCustomAttributes(typeDefinition.CustomAttributes, targetEntity.Attributes);
-			}
-			if (typeDefinition.HasSecurityDeclarations) {
-				AddSecurityAttributes(typeDefinition.SecurityDeclarations, targetEntity.Attributes);
 			}
 		}
 		#endregion
@@ -802,39 +793,6 @@ namespace ICSharpCode.NRefactory.TypeSystem
 		}
 		#endregion
 		
-		#region Security Attributes
-		/// <summary>
-		/// Reads a security declaration.
-		/// </summary>
-		[CLSCompliant(false)]
-		public IList<IUnresolvedAttribute> ReadSecurityDeclaration(SecurityDeclaration secDecl)
-		{
-			if (secDecl == null)
-				throw new ArgumentNullException("secDecl");
-			var result = new List<IUnresolvedAttribute>();
-			AddSecurityAttributes(secDecl, result);
-			return result;
-		}
-		
-		void AddSecurityAttributes(Mono.Collections.Generic.Collection<SecurityDeclaration> securityDeclarations, IList<IUnresolvedAttribute> targetCollection)
-		{
-			foreach (var secDecl in securityDeclarations) {
-				AddSecurityAttributes(secDecl, targetCollection);
-			}
-		}
-		
-		void AddSecurityAttributes(SecurityDeclaration secDecl, IList<IUnresolvedAttribute> targetCollection)
-		{
-			byte[] blob;
-			try {
-				blob = secDecl.GetBlob();
-			} catch (NotSupportedException) {
-				return; // https://github.com/icsharpcode/SharpDevelop/issues/284
-			}
-			var blobSecDecl = new UnresolvedSecurityDeclarationBlob((int)secDecl.Action, blob);
-			targetCollection.AddRange(blobSecDecl.UnresolvedAttributes);
-		}
-		#endregion
 		#endregion
 		
 		#region Read Type Definition
