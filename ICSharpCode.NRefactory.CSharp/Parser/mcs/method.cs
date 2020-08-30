@@ -1844,14 +1844,14 @@ namespace Mono.CSharp {
 			if (debug_builder == null)
 				return;
 
-			var token = ConstructorBuilder.GetToken ();
-			int t = token.Token;
+			//var token = ConstructorBuilder.GetToken ();
+			//int t = token.Token;
 #if STATIC
 			if (ModuleBuilder.IsPseudoToken (t))
 				t = Module.Builder.ResolvePseudoToken (t);
 #endif
 
-			debug_builder.DefineMethod (file, t);
+			//debug_builder.DefineMethod (file, t);
 		}
 
 		#region IMethodData Members
@@ -2174,14 +2174,14 @@ namespace Mono.CSharp {
 			if (debug_builder == null)
 				return;
 
-			var token = builder.GetToken ();
-			int t = token.Token;
+			//var token = builder.GetToken ();
+			//int t = token.Token;
 #if STATIC
 			if (ModuleBuilder.IsPseudoToken (t))
 				t = member.Module.Builder.ResolvePseudoToken (t);
 #endif
 
-			debug_builder.DefineMethod (file, t);
+			//debug_builder.DefineMethod (file, t);
 		}
 	}
 

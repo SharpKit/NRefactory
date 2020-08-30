@@ -415,10 +415,10 @@ namespace Mono.CSharp
 #if NET_4_0
 				var access = AssemblyBuilderAccess.RunAndCollect;
 #else
-				var access = AssemblyBuilderAccess.Run;
+				var access = AssemblyBuilderAccess.RunAndCollect;
 #endif
 				var a = new AssemblyDefinitionDynamic (module, "completions");
-				a.Create (AppDomain.CurrentDomain, access);
+				a.Create ();
 				module.SetDeclaringAssembly (a);
 
 				// Need to setup MemberCache
@@ -686,19 +686,19 @@ namespace Mono.CSharp
 			AssemblyBuilderAccess access;
 
 			if (Environment.GetEnvironmentVariable ("SAVE") != null) {
-				access = AssemblyBuilderAccess.RunAndSave;
+				access = AssemblyBuilderAccess.RunAndCollect;
 				assembly = new AssemblyDefinitionDynamic (module, current_debug_name, current_debug_name);
 				assembly.Importer = importer;
 			} else {
 #if NET_4_0
 				access = AssemblyBuilderAccess.RunAndCollect;
 #else
-				access = AssemblyBuilderAccess.Run;
+				access = AssemblyBuilderAccess.RunAndCollect;
 #endif
 				assembly = new AssemblyDefinitionDynamic (module, current_debug_name);
 			}
 
-			assembly.Create (AppDomain.CurrentDomain, access);
+			assembly.Create ();
 
 			Method expression_method;
 			if (host != null) {
@@ -786,7 +786,7 @@ namespace Mono.CSharp
 			if (host != null)
 				host.CloseContainer ();
 
-			if (access == AssemblyBuilderAccess.RunAndSave)
+			if (access == AssemblyBuilderAccess.RunAndCollect)
 				assembly.Save ();
 
 			if (host == null)

@@ -209,7 +209,7 @@ namespace Mono.CSharp
 		public override ModuleBuilder CreateModuleBuilder ()
 		{
 			if (file_name == null)
-				return Builder.DefineDynamicModule (Name, false);
+				return Builder.DefineDynamicModule (Name);
 
 			return base.CreateModuleBuilder ();
 		}
@@ -217,7 +217,7 @@ namespace Mono.CSharp
 		//
 		// Initializes the code generator
 		//
-		public bool Create (AppDomain domain, AssemblyBuilderAccess access)
+		public bool Create ()
 		{
 #if STATIC || FULL_AOT_RUNTIME
 			throw new NotSupportedException ();
@@ -225,9 +225,9 @@ namespace Mono.CSharp
 			ResolveAssemblySecurityAttributes ();
 			var an = CreateAssemblyName ();
 
-			Builder = file_name == null ?
-				domain.DefineDynamicAssembly (an, access) :
-				domain.DefineDynamicAssembly (an, access, Dirname (file_name));
+			//Builder = file_name == null ?
+			//	domain.DefineDynamicAssembly (an, access) :
+			//	domain.DefineDynamicAssembly (an, access, Dirname (file_name));
 
 			module.Create (this, CreateModuleBuilder ());
 			builder_extra = new AssemblyBuilderMonoSpecific (Builder, Compiler);
@@ -261,7 +261,7 @@ namespace Mono.CSharp
 				base.SaveModule (pekind, machine);
 			}
 
-			Builder.Save (file_name, pekind, machine);
+			//Builder.Save (file_name, pekind, machine);
 		}
 #endif
 	}

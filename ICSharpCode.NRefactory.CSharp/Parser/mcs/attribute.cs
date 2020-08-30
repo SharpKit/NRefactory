@@ -26,7 +26,6 @@ using BadImageFormat = IKVM.Reflection.BadImageFormatException;
 using IKVM.Reflection;
 using IKVM.Reflection.Emit;
 #else
-using SecurityType = System.Collections.Generic.Dictionary<System.Security.Permissions.SecurityAction, System.Security.PermissionSet>;
 using BadImageFormat = System.BadImageFormatException;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -884,41 +883,6 @@ namespace Mono.CSharp {
 		System.Security.Permissions.SecurityAction GetSecurityActionValue ()
 		{
 			return (SecurityAction) ((Constant) pos_args[0].Expr).GetValue ();
-		}
-
-		/// <summary>
-		/// Creates instance of SecurityAttribute class and add result of CreatePermission method to permission table.
-		/// </summary>
-		/// <returns></returns>
-		public void ExtractSecurityPermissionSet (MethodSpec ctor, ref SecurityType permissions)
-		{
-#if STATIC
-			object[] values = new object[pos_args.Count];
-			for (int i = 0; i < values.Length; ++i)
-				values[i] = ((Constant) pos_args[i].Expr).GetValue ();
-
-			PropertyInfo[] prop;
-			object[] prop_values;
-			if (named_values == null) {
-				prop = null;
-				prop_values = null;
-			} else {
-				prop = new PropertyInfo[named_values.Count];
-				prop_values = new object [named_values.Count];
-				for (int i = 0; i < prop.Length; ++i) {
-					prop [i] = ((PropertyExpr) named_values [i].Key).PropertyInfo.MetaInfo;
-					prop_values [i] = ((Constant) named_values [i].Value.Expr).GetValue ();
-				}
-			}
-
-			if (permissions == null)
-				permissions = new SecurityType ();
-
-			var cab = new CustomAttributeBuilder ((ConstructorInfo) ctor.GetMetaInfo (), values, prop, prop_values);
-			permissions.Add (cab);
-#else
-			throw new NotSupportedException ();
-#endif
 		}
 
 		public Constant GetNamedValue (string name)
