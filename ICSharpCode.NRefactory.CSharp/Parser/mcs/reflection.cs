@@ -301,18 +301,6 @@ namespace Mono.CSharp
 			}
 		}
 
-		public override void AddPermissionRequests (PermissionSet[] permissions)
-		{
-			try {
-				if (add_permission == null)
-					add_permission = typeof (AssemblyBuilder).GetMethod ("AddPermissionRequests", BindingFlags.Instance | BindingFlags.NonPublic);
-
-				add_permission.Invoke (builder, permissions);
-			} catch {
-				base.AddPermissionRequests (permissions);
-			}
-		}
-
 		public override void AddTypeForwarder (TypeSpec type, Location loc)
 		{
 			try {

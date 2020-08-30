@@ -31,7 +31,6 @@ using SecurityType = System.Collections.Generic.List<IKVM.Reflection.Emit.Custom
 using IKVM.Reflection;
 using IKVM.Reflection.Emit;
 #else
-using SecurityType = System.Collections.Generic.Dictionary<System.Security.Permissions.SecurityAction, System.Security.PermissionSet>;
 using System.Reflection;
 using System.Reflection.Emit;
 #endif
@@ -2593,7 +2592,6 @@ namespace Mono.CSharp
 	{
 		public const TypeAttributes StaticClassAttribute = TypeAttributes.Abstract | TypeAttributes.Sealed;
 
-		SecurityType declarative_security;
 		protected Constructor generated_primary_constructor;
 
 		protected ClassOrStruct (TypeContainer parent, MemberName name, Attributes attrs, MemberKind kind)
@@ -2645,11 +2643,6 @@ namespace Mono.CSharp
 
 		public override void ApplyAttributeBuilder (Attribute a, MethodSpec ctor, byte[] cdata, PredefinedAttributes pa)
 		{
-			if (a.IsValidSecurityAttribute ()) {
-				a.ExtractSecurityPermissionSet (ctor, ref declarative_security);
-				return;
-			}
-
 			if (a.Type == pa.StructLayout) {
 				PartialContainer.HasStructLayout = true;
 				if (a.IsExplicitLayoutKind ())
@@ -2738,16 +2731,6 @@ namespace Mono.CSharp
 			}
 
 			base.Emit ();
-
-			if (declarative_security != null) {
-				foreach (var de in declarative_security) {
-#if STATIC
-					TypeBuilder.__AddDeclarativeSecurity (de);
-#else
-					TypeBuilder.AddDeclarativeSecurity (de.Key, de.Value);
-#endif
-				}
-			}
 		}
 	}
 

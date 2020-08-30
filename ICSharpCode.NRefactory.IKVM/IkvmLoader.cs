@@ -783,8 +783,6 @@ namespace ICSharpCode.NRefactory.TypeSystem
 		#endregion
 
 		#region Security Attributes
-		static readonly ITypeReference securityActionTypeReference = typeof(System.Security.Permissions.SecurityAction).ToTypeReference();
-		static readonly ITypeReference permissionSetAttributeTypeReference = typeof(System.Security.Permissions.PermissionSetAttribute).ToTypeReference();
 
 //		/// <summary>
 //		/// Reads a security declaration.

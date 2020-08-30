@@ -26,7 +26,6 @@ using IKVM.Reflection;
 using IKVM.Reflection.Emit;
 using SecurityType = System.Collections.Generic.List<IKVM.Reflection.Emit.CustomAttributeBuilder>;
 #else
-using SecurityType = System.Collections.Generic.Dictionary<System.Security.Permissions.SecurityAction, System.Security.PermissionSet>;
 using System.Reflection;
 using System.Reflection.Emit;
 #endif
@@ -71,7 +70,6 @@ namespace Mono.CSharp
 		Method entry_point;
 
 		protected List<ImportedModuleDefinition> added_modules;
-		SecurityType declarative_security;
 		Dictionary<ITypeDefinition, Attribute> emitted_forwarders;
 		AssemblyAttributesPlaceholder module_target_attrs;
 
@@ -196,11 +194,6 @@ namespace Mono.CSharp
 
 		public void ApplyAttributeBuilder (Attribute a, MethodSpec ctor, byte[] cdata, PredefinedAttributes pa)
 		{
-			if (a.IsValidSecurityAttribute ()) {
-				a.ExtractSecurityPermissionSet (ctor, ref declarative_security);
-				return;
-			}
-
 			if (a.Type == pa.AssemblyCulture) {
 				string value = a.GetString ();
 				if (value == null || value.Length == 0)
@@ -510,15 +503,6 @@ namespace Mono.CSharp
 					}
 				}
 
-				if (declarative_security != null) {
-#if STATIC
-					foreach (var entry in declarative_security) {
-						Builder.__AddDeclarativeSecurity (entry);
-					}
-#else
-					throw new NotSupportedException ("Assembly-level security");
-#endif
-				}
 			}
 
 			CheckReferencesPublicToken ();
@@ -664,9 +648,6 @@ namespace Mono.CSharp
 				Compiler.Report.DisableReporting ();
 				try {
 					var ctor = g.Resolve ();
-					if (ctor != null) {
-						g.ExtractSecurityPermissionSet (ctor, ref declarative_security);
-					}
 				} finally {
 					Compiler.Report.EnableReporting ();
 				}
@@ -1097,11 +1078,6 @@ namespace Mono.CSharp
 		{
 			ctx.Report.RuntimeMissingSupport (Location.Null, "-addmodule");
 			return null;
-		}
-
-		public virtual void AddPermissionRequests (PermissionSet[] permissions)
-		{
-			ctx.Report.RuntimeMissingSupport (Location.Null, "assembly declarative security");
 		}
 
 		public virtual void AddTypeForwarder (TypeSpec type, Location loc)

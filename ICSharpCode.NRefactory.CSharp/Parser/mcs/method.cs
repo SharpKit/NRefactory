@@ -34,7 +34,6 @@ using IKVM.Reflection;
 using IKVM.Reflection.Emit;
 #else
 using MetaType = System.Type;
-using SecurityType = System.Collections.Generic.Dictionary<System.Security.Permissions.SecurityAction, System.Security.PermissionSet>;
 using System.Reflection;
 using System.Reflection.Emit;
 #endif
@@ -530,7 +529,6 @@ namespace Mono.CSharp {
 	public abstract class MethodOrOperator : MethodCore, IMethodData, IMethodDefinition
 	{
 		ReturnParameter return_attributes;
-		SecurityType declarative_security;
 		protected MethodData MethodData;
 
 		static readonly string[] attribute_targets = new string [] { "method", "return" };
@@ -570,11 +568,6 @@ namespace Mono.CSharp {
 				}
 
 				is_external_implementation = true;
-			}
-
-			if (a.IsValidSecurityAttribute ()) {
-				a.ExtractSecurityPermissionSet (ctor, ref declarative_security);
-				return;
 			}
 
 			if (MethodBuilder != null)
@@ -706,16 +699,6 @@ namespace Mono.CSharp {
 
 			if (OptAttributes != null)
 				OptAttributes.Emit ();
-
-			if (declarative_security != null) {
-				foreach (var de in declarative_security) {
-#if STATIC
-					MethodBuilder.__AddDeclarativeSecurity (de);
-#else
-					MethodBuilder.AddDeclarativeSecurity (de.Key, de.Value);
-#endif
-				}
-			}
 
 			if (type_expr != null)
 				ConstraintChecker.Check (this, member_type, type_expr.Location);
@@ -1576,7 +1559,6 @@ namespace Mono.CSharp {
 	{
 		public ConstructorBuilder ConstructorBuilder;
 		public ConstructorInitializer Initializer;
-		SecurityType declarative_security;
 		bool has_compliant_args;
 		SourceMethodBuilder debug_builder;
 
@@ -1648,11 +1630,6 @@ namespace Mono.CSharp {
 
 		public override void ApplyAttributeBuilder (Attribute a, MethodSpec ctor, byte[] cdata, PredefinedAttributes pa)
 		{
-			if (a.IsValidSecurityAttribute ()) {
-				a.ExtractSecurityPermissionSet (ctor, ref declarative_security);
-				return;
-			}
-
 			if (a.Type == pa.MethodImpl) {
 				is_external_implementation = a.IsInternalCall ();
 			}
@@ -1810,16 +1787,6 @@ namespace Mono.CSharp {
 					ec.With (EmitContext.Options.ConstructorScope, true);
 
 					block.Emit (ec);
-				}
-			}
-
-			if (declarative_security != null) {
-				foreach (var de in declarative_security) {
-#if STATIC
-					ConstructorBuilder.__AddDeclarativeSecurity (de);
-#else
-					ConstructorBuilder.AddDeclarativeSecurity (de.Key, de.Value);
-#endif
 				}
 			}
 
@@ -2331,7 +2298,6 @@ namespace Mono.CSharp {
 	public abstract class AbstractPropertyEventMethod : MemberCore, IMethodData, IMethodDefinition {
 		protected MethodData method_data;
 		protected ToplevelBlock block;
-		protected SecurityType declarative_security;
 
 		protected readonly string prefix;
 
@@ -2414,11 +2380,6 @@ namespace Mono.CSharp {
 				return;
 			}
 
-			if (a.IsValidSecurityAttribute ()) {
-				a.ExtractSecurityPermissionSet (ctor, ref declarative_security);
-				return;
-			}
-
 			if (a.Target == AttributeTargets.Method) {
 				method_data.MethodBuilder.SetCustomAttribute ((ConstructorInfo) ctor.GetMetaInfo (), cdata);
 				return;
@@ -2465,16 +2426,6 @@ namespace Mono.CSharp {
 
 			if (OptAttributes != null)
 				OptAttributes.Emit ();
-
-			if (declarative_security != null) {
-				foreach (var de in declarative_security) {
-#if STATIC
-					method_data.MethodBuilder.__AddDeclarativeSecurity (de);
-#else
-					method_data.MethodBuilder.AddDeclarativeSecurity (de.Key, de.Value);
-#endif
-				}
-			}
 
 			block = null;
 		}
