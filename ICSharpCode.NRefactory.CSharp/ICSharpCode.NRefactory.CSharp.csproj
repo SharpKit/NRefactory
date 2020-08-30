@@ -24,14 +24,12 @@
     <PackageReference Include="System.Reflection.Emit.ILGeneration" Version="4.7.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\tmp\ikvm\reflect\IKVM.Reflection.csproj" />
     <ProjectReference Include="..\..\cecil\Mono.Cecil.csproj">
       <Name>Mono.Cecil</Name>
     </ProjectReference>
     <ProjectReference Include="..\ICSharpCode.NRefactory.Cecil\ICSharpCode.NRefactory.Cecil.csproj">
       <Name>ICSharpCode.NRefactory.Cecil</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ICSharpCode.NRefactory.IKVM\ICSharpCode.NRefactory.IKVM.csproj" />
     <ProjectReference Include="..\ICSharpCode.NRefactory\ICSharpCode.NRefactory.csproj">
       <Name>ICSharpCode.NRefactory</Name>
     </ProjectReference>
