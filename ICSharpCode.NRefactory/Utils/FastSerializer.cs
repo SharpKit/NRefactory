@@ -1,14 +1,14 @@
 ﻿// Copyright (c) 2011 Daniel Grunwald
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this
 // software and associated documentation files (the "Software"), to deal in the Software
 // without restriction, including without limitation the rights to use, copy, modify, merge,
 // publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
 // to whom the Software is furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in all copies or
 // substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
 // INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
 // PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
@@ -35,7 +35,7 @@ namespace ICSharpCode.NRefactory.Utils
 		/// full assembly and type names.
 		/// </summary>
 		public SerializationBinder SerializationBinder { get; set; }
-		
+
 		/// <summary>
 		/// Can be used to set several 'fixed' instances.
 		/// When serializing, such instances will not be included; and any references to a fixed instance
@@ -45,51 +45,51 @@ namespace ICSharpCode.NRefactory.Utils
 		/// </summary>
 		public object[] FixedInstances { get; set; }
 		#endregion
-		
+
 		#region Constants
 		const int magic = 0x71D28A5E;
-		
+
 		const byte Type_ReferenceType = 1;
 		const byte Type_ValueType = 2;
 		const byte Type_SZArray = 3;
 		const byte Type_ParameterizedType = 4;
 		#endregion
-		
+
 		#region Serialization
 		sealed class SerializationType
 		{
 			public readonly int ID;
 			public readonly Type Type;
-			
+
 			public SerializationType(int iD, Type type)
 			{
 				this.ID = iD;
 				this.Type = type;
 			}
-			
+
 			public ObjectScanner Scanner;
 			public ObjectWriter Writer;
 			public string TypeName;
 			public int AssemblyNameID;
 		}
-		
+
 		sealed class SerializationContext
 		{
 			readonly Dictionary<object, int> objectToID = new Dictionary<object, int>(ReferenceComparer.Instance);
 			readonly List<object> instances = new List<object>(); // index: object ID
 			readonly List<SerializationType> objectTypes = new List<SerializationType>(); // index: object ID
 			SerializationType stringType;
-			
+
 			readonly Dictionary<Type, SerializationType> typeMap = new Dictionary<Type, SerializationType>();
 			readonly List<SerializationType> types = new List<SerializationType>();
-			
+
 			readonly Dictionary<string, int> assemblyNameToID = new Dictionary<string, int>();
 			readonly List<string> assemblyNames = new List<string>();
-			
+
 			readonly FastSerializer fastSerializer;
 			public readonly BinaryWriter writer;
 			int fixedInstanceCount;
-			
+
 			internal SerializationContext(FastSerializer fastSerializer, BinaryWriter writer)
 			{
 				this.fastSerializer = fastSerializer;
@@ -97,7 +97,7 @@ namespace ICSharpCode.NRefactory.Utils
 				instances.Add(null); // use object ID 0 for null
 				objectTypes.Add(null);
 			}
-			
+
 			#region Scanning
 			public void MarkFixedInstances(object[] fixedInstances)
 			{
@@ -111,7 +111,7 @@ namespace ICSharpCode.NRefactory.Utils
 					}
 				}
 			}
-			
+
 			/// <summary>
 			/// Marks an instance for future scanning.
 			/// </summary>
@@ -120,11 +120,11 @@ namespace ICSharpCode.NRefactory.Utils
 				if (instance == null || objectToID.ContainsKey(instance))
 					return;
 				Log(" Mark {0}", instance.GetType().Name);
-				
+
 				objectToID.Add(instance, instances.Count);
 				instances.Add(instance);
 			}
-			
+
 			internal void Scan()
 			{
 				Log("Scanning...");
@@ -157,7 +157,7 @@ namespace ICSharpCode.NRefactory.Utils
 				}
 			}
 			#endregion
-			
+
 			#region Scan Types
 			SerializationType MarkType(Type type)
 			{
@@ -184,7 +184,7 @@ namespace ICSharpCode.NRefactory.Utils
 							Debug.Assert(typeName != null);
 						}
 					}
-					
+
 					sType = new SerializationType(typeMap.Count, type);
 					sType.TypeName = typeName;
 					if (assemblyName != null) {
@@ -204,7 +204,7 @@ namespace ICSharpCode.NRefactory.Utils
 				}
 				return sType;
 			}
-			
+
 			internal void ScanTypes()
 			{
 				for (int i = 0; i < types.Count; i++) {
@@ -219,7 +219,7 @@ namespace ICSharpCode.NRefactory.Utils
 				}
 			}
 			#endregion
-			
+
 			#region Writing
 			public void WriteObjectID(object instance)
 			{
@@ -229,7 +229,7 @@ namespace ICSharpCode.NRefactory.Utils
 				else
 					writer.Write(id);
 			}
-			
+
 			void WriteTypeID(Type type)
 			{
 				Debug.Assert(typeMap.ContainsKey(type));
@@ -239,7 +239,7 @@ namespace ICSharpCode.NRefactory.Utils
 				else
 					writer.Write(typeID);
 			}
-			
+
 			internal void Write()
 			{
 				Log("Writing...");
@@ -249,11 +249,11 @@ namespace ICSharpCode.NRefactory.Utils
 				writer.Write(types.Count);
 				writer.Write(assemblyNames.Count);
 				writer.Write(fixedInstanceCount);
-				
+
 				foreach (string assemblyName in assemblyNames) {
 					writer.Write(assemblyName);
 				}
-				
+
 				foreach (SerializationType sType in types) {
 					Type type = sType.Type;
 					if (type.HasElementType) {
@@ -303,7 +303,7 @@ namespace ICSharpCode.NRefactory.Utils
 						}
 					}
 				}
-				
+
 				// Write out information necessary to create the instances
 				// starting from 1, because index 0 is null
 				for (int i = 1 + fixedInstanceCount; i < instances.Count; i++) {
@@ -330,15 +330,15 @@ namespace ICSharpCode.NRefactory.Utils
 			}
 			#endregion
 		}
-		
+
 		#region Object Scanners
 		delegate void ObjectScanner(SerializationContext context, object instance);
-		
+
 		static readonly MethodInfo mark = typeof(SerializationContext).GetMethod("Mark", new[] { typeof(object) });
 		static readonly FieldInfo writerField = typeof(SerializationContext).GetField("writer");
-		
+
 		Dictionary<Type, ObjectScanner> scanners = new Dictionary<Type, ObjectScanner>();
-		
+
 		ObjectScanner GetScanner(Type type)
 		{
 			ObjectScanner scanner;
@@ -348,7 +348,7 @@ namespace ICSharpCode.NRefactory.Utils
 			}
 			return scanner;
 		}
-		
+
 		ObjectScanner CreateScanner(Type type)
 		{
 			bool isArray = type.IsArray;
@@ -374,20 +374,20 @@ namespace ICSharpCode.NRefactory.Utils
 				// The scanner has nothing to do for this object.
 				return delegate { };
 			}
-			
+            System.Reflection.Emit.
 			DynamicMethod dynamicMethod = new DynamicMethod(
 				(isArray ? "ScanArray_" : "Scan_") + type.Name,
 				typeof(void), new [] { typeof(SerializationContext), typeof(object) },
 				true);
 			ILGenerator il = dynamicMethod.GetILGenerator();
-			
-			
+
+
 			if (isArray) {
 				var instance = il.DeclareLocal(type.MakeArrayType());
 				il.Emit(OpCodes.Ldarg_1);
 				il.Emit(OpCodes.Castclass, type.MakeArrayType());
 				il.Emit(OpCodes.Stloc, instance); // instance = (type[])arg_1;
-				
+
 				// for (int i = 0; i < instance.Length; i++) scan instance[i];
 				var loopStart = il.DefineLabel();
 				var loopHead = il.DefineLabel();
@@ -395,20 +395,20 @@ namespace ICSharpCode.NRefactory.Utils
 				il.Emit(OpCodes.Ldc_I4_0);
 				il.Emit(OpCodes.Stloc, loopVariable); // loopVariable = 0
 				il.Emit(OpCodes.Br, loopHead); // goto loopHead;
-				
+
 				il.MarkLabel(loopStart);
-				
+
 				il.Emit(OpCodes.Ldloc, instance); // instance
 				il.Emit(OpCodes.Ldloc, loopVariable); // instance, loopVariable
 				il.Emit(OpCodes.Ldelem, type); // &instance[loopVariable]
 				EmitScanValueType(il, type);
-				
-				
+
+
 				il.Emit(OpCodes.Ldloc, loopVariable); // loopVariable
 				il.Emit(OpCodes.Ldc_I4_1); // loopVariable, 1
 				il.Emit(OpCodes.Add); // loopVariable+1
 				il.Emit(OpCodes.Stloc, loopVariable); // loopVariable++;
-				
+
 				il.MarkLabel(loopHead);
 				il.Emit(OpCodes.Ldloc, loopVariable); // loopVariable
 				il.Emit(OpCodes.Ldloc, instance); // loopVariable, instance
@@ -426,7 +426,7 @@ namespace ICSharpCode.NRefactory.Utils
 				il.Emit(OpCodes.Ldarg_1);
 				il.Emit(OpCodes.Castclass, type);
 				il.Emit(OpCodes.Stloc, instance); // instance = (type)arg_1;
-				
+
 				foreach (FieldInfo field in fields) {
 					EmitScanField(il, instance, field); // scan instance.Field
 				}
@@ -460,7 +460,7 @@ namespace ICSharpCode.NRefactory.Utils
 		{
 			var fieldRef = il.DeclareLocal(valType);
 			il.Emit(OpCodes.Stloc, fieldRef);
-			
+
 			foreach (FieldInfo field in GetSerializableFields(valType)) {
 				if (IsReferenceOrContainsReferences(field.FieldType)) {
 					EmitScanField(il, fieldRef, field);
@@ -558,37 +558,37 @@ namespace ICSharpCode.NRefactory.Utils
 				// The writer has nothing to do for this object.
 				return delegate { };
 			}
-			
-			
+
+
 			DynamicMethod dynamicMethod = new DynamicMethod(
 				(isArray ? "WriteArray_" : "Write_") + type.Name,
 				typeof(void), new [] { typeof(SerializationContext), typeof(object) },
 				true);
 			ILGenerator il = dynamicMethod.GetILGenerator();
-			
+
 			var writer = il.DeclareLocal(typeof(BinaryWriter));
-			
+
 			il.Emit(OpCodes.Ldarg_0);
 			il.Emit(OpCodes.Ldfld, writerField);
 			il.Emit(OpCodes.Stloc, writer); // writer = context.writer;
-			
+
 			if (isArray) {
 				var instance = il.DeclareLocal(type.MakeArrayType());
 				il.Emit(OpCodes.Ldarg_1);
 				il.Emit(OpCodes.Castclass, type.MakeArrayType());
 				il.Emit(OpCodes.Stloc, instance); // instance = (type[])arg_1;
-				
+
 				// for (int i = 0; i < instance.Length; i++) write instance[i];
-				
+
 				var loopStart = il.DefineLabel();
 				var loopHead = il.DefineLabel();
 				var loopVariable = il.DeclareLocal(typeof(int));
 				il.Emit(OpCodes.Ldc_I4_0);
 				il.Emit(OpCodes.Stloc, loopVariable); // loopVariable = 0
 				il.Emit(OpCodes.Br, loopHead); // goto loopHead;
-				
+
 				il.MarkLabel(loopStart);
-				
+
 				if (type.IsEnum || type.IsPrimitive) {
 					if (type.IsEnum) {
 						type = type.GetEnumUnderlyingType();
@@ -637,12 +637,12 @@ namespace ICSharpCode.NRefactory.Utils
 					il.Emit(OpCodes.Ldelem, type); // instance[loopVariable]
 					EmitWriteValueType(il, writer, type);
 				}
-				
+
 				il.Emit(OpCodes.Ldloc, loopVariable); // loopVariable
 				il.Emit(OpCodes.Ldc_I4_1); // loopVariable, 1
 				il.Emit(OpCodes.Add); // loopVariable+1
 				il.Emit(OpCodes.Stloc, loopVariable); // loopVariable++;
-				
+
 				il.MarkLabel(loopHead);
 				il.Emit(OpCodes.Ldloc, loopVariable); // loopVariable
 				il.Emit(OpCodes.Ldloc, instance); // loopVariable, instance
@@ -667,7 +667,7 @@ namespace ICSharpCode.NRefactory.Utils
 				il.Emit(OpCodes.Ldarg_1);
 				il.Emit(OpCodes.Castclass, type);
 				il.Emit(OpCodes.Stloc, instance); // instance = (type)arg_1;
-				
+
 				foreach (FieldInfo field in fields) {
 					EmitWriteField(il, writer, instance, field); // write instance.Field
 				}
@@ -701,7 +701,7 @@ namespace ICSharpCode.NRefactory.Utils
 				il.Emit(OpCodes.Call, writeObjectID); // context.WriteObjectID(instance.field);
 			}
 		}
-		
+
 		/// <summary>
 		/// Writes a primitive value of the specified type.
 		/// Stack transition: ..., writer, value => ...
@@ -749,10 +749,10 @@ namespace ICSharpCode.NRefactory.Utils
 		{
 			Debug.Assert(valType.IsValueType);
 			Debug.Assert(!(valType.IsEnum || valType.IsPrimitive));
-			
+
 			var fieldVal = il.DeclareLocal(valType);
 			il.Emit(OpCodes.Stloc, fieldVal);
-			
+
 			foreach (FieldInfo field in GetSerializableFields(valType)) {
 				EmitWriteField(il, writer, fieldVal, field);
 			}
@@ -785,11 +785,11 @@ namespace ICSharpCode.NRefactory.Utils
 		sealed class DeserializationContext
 		{
 			public Type[] Types; // index: type ID
-			
+
 			public object[] Objects; // index: object ID
-			
+
 			public BinaryReader Reader;
-			
+
 			public object ReadObject()
 			{
 				if (this.Objects.Length <= ushort.MaxValue)
@@ -797,7 +797,7 @@ namespace ICSharpCode.NRefactory.Utils
 				else
 					return this.Objects[Reader.ReadInt32()];
 			}
-			
+
 			#region DeserializeTypeDescriptions
 			internal int ReadTypeID()
 			{
@@ -806,7 +806,7 @@ namespace ICSharpCode.NRefactory.Utils
 				else
 					return Reader.ReadInt32();
 			}
-			
+
 			internal void DeserializeTypeDescriptions()
 			{
 				for (int i = 0; i < this.Types.Length; i++) {
@@ -816,10 +816,10 @@ namespace ICSharpCode.NRefactory.Utils
 					int versionNumber = Reader.ReadInt32();
 					if (versionNumber != FastSerializerVersionAttribute.GetVersionNumber(type))
 						throw new SerializationException("Type '" + type.FullName + "' was serialized with version " + versionNumber + ", but is version " + FastSerializerVersionAttribute.GetVersionNumber(type));
-					
+
 					bool isCustomSerialization = typeof(ISerializable).IsAssignableFrom(type);
 					bool typeIsSpecial = type.IsPrimitive || isCustomSerialization;
-					
+
 					byte serializedFieldCount = Reader.ReadByte();
 					if (serializedFieldCount == byte.MaxValue) {
 						// special type
@@ -828,13 +828,13 @@ namespace ICSharpCode.NRefactory.Utils
 					} else {
 						if (typeIsSpecial)
 							throw new SerializationException("Type '" + type.FullName + "' wasn't serialized as special type, but is special now.");
-						
+
 						var availableFields = GetSerializableFields(this.Types[i]);
 						if (availableFields.Count != serializedFieldCount)
 							throw new SerializationException("Number of fields on " + type.FullName + " has changed.");
 						for (int j = 0; j < serializedFieldCount; j++) {
 							int fieldTypeID = ReadTypeID();
-							
+
 							string fieldName = Reader.ReadString();
 							FieldInfo fieldInfo = availableFields[j];
 							if (fieldInfo.Name != fieldName)
@@ -847,26 +847,26 @@ namespace ICSharpCode.NRefactory.Utils
 			}
 			#endregion
 		}
-		
+
 		delegate void ObjectReader(DeserializationContext context, object instance);
-		
+
 		public object Deserialize(Stream stream)
 		{
 			return Deserialize(new BinaryReaderWith7BitEncodedInts(stream));
 		}
-		
+
 		public object Deserialize(BinaryReader reader)
 		{
 			if (reader.ReadInt32() != magic)
 				throw new SerializationException("The data cannot be read by FastSerializer (unknown magic value)");
-			
+
 			DeserializationContext context = new DeserializationContext();
 			context.Reader = reader;
 			context.Objects = new object[reader.ReadInt32()];
 			context.Types = new Type[reader.ReadInt32()];
 			string[] assemblyNames = new string[reader.ReadInt32()];
 			int fixedInstanceCount = reader.ReadInt32();
-			
+
 			if (fixedInstanceCount != 0) {
 				if (this.FixedInstances == null || this.FixedInstances.Length != fixedInstanceCount)
 					throw new SerializationException("Number of fixed instances doesn't match");
@@ -874,7 +874,7 @@ namespace ICSharpCode.NRefactory.Utils
 					context.Objects[i + 1] = this.FixedInstances[i];
 				}
 			}
-			
+
 			for (int i = 0; i < assemblyNames.Length; i++) {
 				assemblyNames[i] = reader.ReadString();
 			}
@@ -927,7 +927,7 @@ namespace ICSharpCode.NRefactory.Utils
 			int[] typeIDByObjectID = new int[context.Objects.Length];
 			for (int i = 1 + fixedInstanceCount; i < context.Objects.Length; i++) {
 				int typeID = context.ReadTypeID();
-				
+
 				object instance;
 				if (typeID == stringTypeID) {
 					instance = reader.ReadString();
@@ -979,21 +979,21 @@ namespace ICSharpCode.NRefactory.Utils
 				if (dc != null)
 					dc.OnDeserialization(null);
 			}
-			
+
 			return context.ReadObject();
 		}
-		
+
 		#region Object Reader
 		static readonly FieldInfo readerField = typeof(DeserializationContext).GetField("Reader");
 		static readonly MethodInfo readObject = typeof(DeserializationContext).GetMethod("ReadObject");
-		
+
 		static readonly MethodInfo readByte = typeof(BinaryReader).GetMethod("ReadByte");
 		static readonly MethodInfo readShort = typeof(BinaryReader).GetMethod("ReadInt16");
 		static readonly MethodInfo readInt = typeof(BinaryReader).GetMethod("ReadInt32");
 		static readonly MethodInfo readLong = typeof(BinaryReader).GetMethod("ReadInt64");
 		static readonly MethodInfo readFloat = typeof(BinaryReader).GetMethod("ReadSingle");
 		static readonly MethodInfo readDouble = typeof(BinaryReader).GetMethod("ReadDouble");
-		
+
 		Dictionary<Type, ObjectReader> readers = new Dictionary<Type, ObjectReader>();
 
 		ObjectReader GetReader(Type type)
@@ -1005,7 +1005,7 @@ namespace ICSharpCode.NRefactory.Utils
 			}
 			return reader;
 		}
-		
+
 		ObjectReader CreateReader(Type type)
 		{
 			if (type == typeof(string)) {
@@ -1045,7 +1045,7 @@ namespace ICSharpCode.NRefactory.Utils
 				// The reader has nothing to do for this object.
 				return delegate { };
 			}
-			
+
 			DynamicMethod dynamicMethod = new DynamicMethod(
 				(isArray ? "ReadArray_" : "Read_") + type.Name,
 				MethodAttributes.Public | MethodAttributes.Static,
@@ -1054,30 +1054,30 @@ namespace ICSharpCode.NRefactory.Utils
 				type,
 				true);
 			ILGenerator il = dynamicMethod.GetILGenerator();
-			
+
 			var reader = il.DeclareLocal(typeof(BinaryReader));
-			
+
 			il.Emit(OpCodes.Ldarg_0);
 			il.Emit(OpCodes.Ldfld, readerField);
 			il.Emit(OpCodes.Stloc, reader); // reader = context.reader;
-			
+
 			if (isArray) {
 				var instance = il.DeclareLocal(type.MakeArrayType());
 				il.Emit(OpCodes.Ldarg_1);
 				il.Emit(OpCodes.Castclass, type.MakeArrayType());
 				il.Emit(OpCodes.Stloc, instance); // instance = (type[])arg_1;
-				
+
 				// for (int i = 0; i < instance.Length; i++) read &instance[i];
-				
+
 				var loopStart = il.DefineLabel();
 				var loopHead = il.DefineLabel();
 				var loopVariable = il.DeclareLocal(typeof(int));
 				il.Emit(OpCodes.Ldc_I4_0);
 				il.Emit(OpCodes.Stloc, loopVariable); // loopVariable = 0
 				il.Emit(OpCodes.Br, loopHead); // goto loopHead;
-				
+
 				il.MarkLabel(loopStart);
-				
+
 				if (type.IsEnum || type.IsPrimitive) {
 					if (type.IsEnum) {
 						type = type.GetEnumUnderlyingType();
@@ -1120,12 +1120,12 @@ namespace ICSharpCode.NRefactory.Utils
 					il.Emit(OpCodes.Ldelema, type); // instance[loopVariable]
 					EmitReadValueType(il, reader, type);
 				}
-				
+
 				il.Emit(OpCodes.Ldloc, loopVariable); // loopVariable
 				il.Emit(OpCodes.Ldc_I4_1); // loopVariable, 1
 				il.Emit(OpCodes.Add); // loopVariable+1
 				il.Emit(OpCodes.Stloc, loopVariable); // loopVariable++;
-				
+
 				il.MarkLabel(loopHead);
 				il.Emit(OpCodes.Ldloc, loopVariable); // loopVariable
 				il.Emit(OpCodes.Ldloc, instance); // loopVariable, instance
@@ -1179,7 +1179,7 @@ namespace ICSharpCode.NRefactory.Utils
 				il.Emit(OpCodes.Ldarg_1);
 				il.Emit(OpCodes.Castclass, type);
 				il.Emit(OpCodes.Stloc, instance); // instance = (type)arg_1;
-				
+
 				foreach (FieldInfo field in fields) {
 					EmitReadField(il, reader, instance, field); // read instance.Field
 				}
@@ -1258,40 +1258,40 @@ namespace ICSharpCode.NRefactory.Utils
 		{
 			Debug.Assert(valType.IsValueType);
 			Debug.Assert(!(valType.IsEnum || valType.IsPrimitive));
-			
+
 			var fieldRef = il.DeclareLocal(valType.MakeByRefType());
 			il.Emit(OpCodes.Stloc, fieldRef);
-			
+
 			foreach (FieldInfo field in GetSerializableFields(valType)) {
 				EmitReadField(il, reader, fieldRef, field);
 			}
 		}
 		#endregion
-		
+
 		#region Custom Deserialization
 		struct CustomDeserialization
 		{
 			readonly object instance;
 			readonly SerializationInfo serializationInfo;
 			readonly CustomDeserializationAction action;
-			
+
 			public CustomDeserialization(object instance, SerializationInfo serializationInfo, CustomDeserializationAction action)
 			{
 				this.instance = instance;
 				this.serializationInfo = serializationInfo;
 				this.action = action;
 			}
-			
+
 			public void Run(StreamingContext context)
 			{
 				action(instance, serializationInfo, context);
 			}
 		}
-		
+
 		delegate void CustomDeserializationAction(object instance, SerializationInfo info, StreamingContext context);
-		
+
 		Dictionary<Type, CustomDeserializationAction> customDeserializationActions = new Dictionary<Type, CustomDeserializationAction>();
-		
+
 		CustomDeserializationAction GetCustomDeserializationAction(Type type)
 		{
 			CustomDeserializationAction action;
@@ -1301,7 +1301,7 @@ namespace ICSharpCode.NRefactory.Utils
 			}
 			return action;
 		}
-		
+
 		static CustomDeserializationAction CreateCustomDeserializationAction(Type type)
 		{
 			ConstructorInfo ctor = type.GetConstructor(
@@ -1312,7 +1312,7 @@ namespace ICSharpCode.NRefactory.Utils
 				null);
 			if (ctor == null)
 				throw new SerializationException("Could not find deserialization constructor for " + type.FullName);
-			
+
 			DynamicMethod dynamicMethod = new DynamicMethod(
 				"CallCtor_" + type.Name,
 				MethodAttributes.Public | MethodAttributes.Static,
@@ -1330,14 +1330,14 @@ namespace ICSharpCode.NRefactory.Utils
 		}
 		#endregion
 		#endregion
-		
+
 		[Conditional("DEBUG_SERIALIZER")]
 		static void Log(string format, params object[] args)
 		{
 			Debug.WriteLine(format, args);
 		}
 	}
-	
+
 	/// <summary>
 	/// Specifies the version of the class.
 	/// The <see cref="FastSerializer"/> will refuse to deserialize an instance that was stored by
@@ -1347,18 +1347,18 @@ namespace ICSharpCode.NRefactory.Utils
 	public class FastSerializerVersionAttribute : Attribute
 	{
 		readonly int versionNumber;
-		
+
 		public FastSerializerVersionAttribute(int versionNumber)
 		{
 			this.versionNumber = versionNumber;
 		}
-		
+
 		public int VersionNumber {
 			get {
 				return versionNumber;
 			}
 		}
-		
+
 		internal static int GetVersionNumber(Type type)
 		{
 			var arr = type.GetCustomAttributes(typeof(FastSerializerVersionAttribute), false);
